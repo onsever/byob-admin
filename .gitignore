@@ -10,7 +10,7 @@ frontend/*.mobileprovision
 frontend/*.orig.*
 frontend/web-build/
 backend/.env
-backend/node_modules
+backend/node_modules/
 
 # macOS
 .DS_Store
