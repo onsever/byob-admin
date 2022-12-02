@@ -4,7 +4,7 @@ import TabNavigator from "./navigators/TabNavigator";
 import AuthStackNavigator from "./navigators/AuthStackNavigator";
 
 export default function App() {
-  const [user, setUser] = React.useState("null");
+  const [user, setUser] = React.useState(null);
 
   return (
     <NavigationContainer>
