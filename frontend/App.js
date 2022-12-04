@@ -1,14 +1,11 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import TabNavigator from "./navigators/TabNavigator";
-import AuthStackNavigator from "./navigators/AuthStackNavigator";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import RootNavigator from "./navigators/RootNavigator";
 
 export default function App() {
-  const [user, setUser] = React.useState(null);
-
   return (
-    <NavigationContainer>
-      {user ? <TabNavigator /> : <AuthStackNavigator />}
-    </NavigationContainer>
+    <Provider store={store}>
+      <RootNavigator />
+    </Provider>
   );
 }
