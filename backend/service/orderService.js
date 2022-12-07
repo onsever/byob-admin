@@ -24,12 +24,19 @@ const orderService = (() => {
           return;
         }
 
-        const newOrder = Order({ ...params, isComplete: false });
-        await newOrder.save();
+        if (table.orderId) {
+          await Order.findByIdAndUpdate(table.orderId, {
+            order: { ...params, isComplete: false },
+          });
+          resolve("Order Updated");
+        } else {
+          const newOrder = Order({ ...params, isComplete: false });
+          await newOrder.save();
 
-        await Table.findByIdAndUpdate(table.id, { orderId: newOrder.id });
+          await Table.findByIdAndUpdate(table.id, { orderId: newOrder.id });
 
-        resolve(newOrder);
+          resolve(newOrder);
+        }
       } catch (e) {
         console.log("error", e);
       }
