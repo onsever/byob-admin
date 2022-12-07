@@ -7,14 +7,26 @@ const tableService = (() => {
   const createTable = (params, user) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const todaysTableList = Table({
-          ...params,
-          userId: user.id,
-          orderId: null,
+        const today = moment().startOf("day");
+        const todaysTable = await Table.findOne({
+          createdAt: {
+            $gte: today.toDate(),
+            $lte: moment(today).endOf("day").toDate(),
+          },
           checkedOut: false,
-        });
-        todaysTableList.save();
-        resolve({ params, user });
+        }).exec();
+        if (todaysTable) {
+          reject("Table has already been reserved.");
+        } else {
+          const table = Table({
+            ...params,
+            userId: user.id,
+            orderId: null,
+            checkedOut: false,
+          });
+          await table.save();
+          resolve("Table has been reserved.");
+        }
       } catch (e) {
         console.log("error", e);
       }
@@ -40,7 +52,14 @@ const tableService = (() => {
         }
 
         const order = await Order.findById(table.orderId);
-        const user = await User.findById(table.userId);
+        const user = await User.findById(table.userId, {
+          firstName: 1,
+          lastName: 1,
+          phone: 1,
+          email: 1,
+          address: 1,
+          dob: 1,
+        });
 
         resolve({ order, user });
       } catch (e) {

@@ -12,7 +12,7 @@ route.post("/", auth, (req, res) => {
       .then((result) => {
         httpHelper.success(res, result);
       })
-      .catch((err) => httpHelper.error(res, err));
+      .catch((err) => httpHelper.error(res, err, "Table Reservation Error"));
   } catch (e) {
     httpHelper.error(res, e);
   }
