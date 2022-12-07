@@ -18,4 +18,17 @@ route.post("/", auth, (req, res) => {
   }
 });
 
+route.post("/complete/:id", auth, (req, res) => {
+  try {
+    orderService
+      .completeOrder(req.params.id, req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 export default route;

@@ -18,4 +18,17 @@ route.post("/", auth, (req, res) => {
   }
 });
 
+route.get("/:number", auth, (req, res) => {
+  try {
+    tableService
+      .getTableDetails(req.params.number)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 export default route;

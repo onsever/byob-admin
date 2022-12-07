@@ -17,13 +17,14 @@ const orderService = (() => {
             $lte: moment(today).endOf("day").toDate(),
           },
           userId: user.id,
+          checkedOut: false,
         }).exec();
         if (!table) {
           reject("User doesn't have any table selected.");
           return;
         }
 
-        const newOrder = Order(params);
+        const newOrder = Order({ ...params, isComplete: false });
         await newOrder.save();
 
         await Table.findByIdAndUpdate(table.id, { orderId: newOrder.id });
@@ -35,8 +36,35 @@ const orderService = (() => {
     });
   };
 
+  const completeOrder = (orderId, params) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const order = await Order.findById(orderId).exec();
+        if (!order) {
+          reject("Order not found.");
+          return;
+        }
+
+        await Order.findByIdAndUpdate(orderId, {
+          isComplete: true,
+          totalPaid: params.totalPaid,
+        });
+
+        await Table.findOneAndUpdate(
+          { orderId: orderId },
+          { checkedOut: true }
+        );
+
+        resolve("Order has been completed.");
+      } catch (e) {
+        console.log("error", e);
+      }
+    });
+  };
+
   return {
     createOrder: createOrder,
+    completeOrder: completeOrder,
   };
 })();
 
