@@ -1,5 +1,5 @@
 import express from "express";
-import orderService from "../service/orderService.js";
+import tableService from "../service/tableService.js";
 import httpHelper from "../utils/httpHelper.js";
 import auth from "../middleware/authMiddleware.js";
 
@@ -7,8 +7,8 @@ const route = express.Router();
 
 route.post("/", auth, (req, res) => {
   try {
-    orderService
-      .createOrder(req.body, req.user)
+    tableService
+      .createTable(req.body, req.user)
       .then((result) => {
         httpHelper.success(res, result);
       })
