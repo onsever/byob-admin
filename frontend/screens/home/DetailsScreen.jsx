@@ -3,11 +3,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import { useFetch } from "../../hooks/useFetch";
 import tw from "twrnc";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function DetailsScreen({ route, navigation }) {
   const { item } = route.params;
   const { loaded, loading, error, fetch, result } = useFetch();
   const [data, setData] = React.useState(null);
+  const [infoClicked, setInfoClicked] = React.useState(false);
 
   React.useEffect(() => {
     fetch("table/" + item);
@@ -41,9 +43,17 @@ export default function DetailsScreen({ route, navigation }) {
       ) : (
         <>
           <View style={tw`w-full h-full`}>
-            <Text style={tw`text-center`}>
-              Table For {data?.user.firstName + " " + data?.user.lastName}
-            </Text>
+            <View style={tw`flex-row items-center justify-evenly`}>
+              <Text style={tw`text-center font-bold`}>
+                Table For {data?.user.firstName + " " + data?.user.lastName}
+              </Text>
+              <Ionicons
+                name="information-circle"
+                size={24}
+                color="blue"
+                onPress={() => setInfoClicked(!infoClicked)}
+              />
+            </View>
             {data?.order && <Text>There is order</Text>}
           </View>
         </>
