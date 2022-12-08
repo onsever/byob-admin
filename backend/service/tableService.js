@@ -20,7 +20,7 @@ const tableService = (() => {
         } else {
           const table = Table({
             ...params,
-            userId: user.id,
+            userId: user._id,
             orderId: null,
             checkedOut: false,
           });

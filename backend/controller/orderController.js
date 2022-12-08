@@ -18,6 +18,19 @@ route.post("/", auth, (req, res) => {
   }
 });
 
+route.post("/drink", auth, (req, res) => {
+  try {
+    orderService
+      .createDrinkOrder(req.body, req.user)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/complete/:id", auth, (req, res) => {
   try {
     orderService

@@ -20,7 +20,7 @@ const menuService = (() => {
         if (Array.isArray(params)) {
           const foodList = await Food.insertMany(params);
           resolve(foodList);
-        } else reject("List must be an array.")
+        } else reject("List must be an array.");
       } catch (e) {
         reject(e);
       }
@@ -56,7 +56,7 @@ const menuService = (() => {
         if (Array.isArray(params)) {
           const catList = await Category.insertMany(params);
           resolve(catList);
-        } else reject("List must be an array.")
+        } else reject("List must be an array.");
       } catch (e) {
         reject(e);
       }
@@ -78,8 +78,32 @@ const menuService = (() => {
   const getDrinkList = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const drinkList = await Drink.find();
-        resolve(drinkList);
+        const drinkList = await Drink.find(
+          {},
+          {
+            title: 1,
+            price: 1,
+            guranteedPrice: 1,
+            currentPrice: 1,
+            category: 1,
+          }
+        );
+        let result = [];
+
+        await Promise.all(
+          drinkList.map(async (drink) => {
+            if (!drink.isHighest || !drink.currentPrice) {
+              drink.currentPrice = drink.guranteedPrice;
+            }
+            let category = await Category.findById(drink.category);
+            result.push({
+              ...drink.toJSON(),
+              categoryName: category.toJSON().name,
+            });
+            return result;
+          })
+        );
+        resolve(result);
       } catch (e) {
         reject(e);
       }
@@ -92,8 +116,7 @@ const menuService = (() => {
         if (Array.isArray(params)) {
           const drinkList = await Drink.insertMany(params);
           resolve(drinkList);
-        } else reject("List must be an array.")
-
+        } else reject("List must be an array.");
       } catch (e) {
         reject(e);
       }
@@ -121,7 +144,7 @@ const menuService = (() => {
     saveCategoryList: saveCategoryList,
     getDrinkList: getDrinkList,
     saveDrinkList: saveDrinkList,
-    saveDrink: saveDrink
+    saveDrink: saveDrink,
   };
 })();
 
