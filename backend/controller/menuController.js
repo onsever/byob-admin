@@ -44,4 +44,43 @@ route.post("/food/list", auth, (req, res) => {
   }
 });
 
+route.get("/category", auth, (req, res) => {
+  try {
+    menuService
+      .getCategoryList()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
+route.post("/category", auth, (req, res) => {
+  try {
+    menuService
+      .saveCategory(req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
+route.post("/category/list", auth, (req, res) => {
+  try {
+    menuService
+      .saveCategoryList(req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 export default route;
