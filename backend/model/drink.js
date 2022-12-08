@@ -5,7 +5,7 @@ const drinkSchema = new mongoose.Schema(
     title: { type: String, required: true },
     price: { type: String, required: true },
     guranteedPrice: { type: String, required: true },
-    category: { type: String, required },
+    category: { type: String, required: true },
   },
   {
     timestamps: true,

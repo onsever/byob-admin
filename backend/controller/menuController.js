@@ -83,4 +83,43 @@ route.post("/category/list", auth, (req, res) => {
   }
 });
 
+route.get("/drink", auth, (req, res) => {
+  try {
+    menuService
+      .getDrinkList()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
+route.post("/drink", auth, (req, res) => {
+  try {
+    menuService
+      .saveDrink(req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
+route.post("/drink/list", auth, (req, res) => {
+  try {
+    menuService
+      .saveDrinkList(req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 export default route;
