@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/authSlice";
+// import { logout } from "../../redux/features/authSlice";
 import tw from "twrnc";
 import React from "react";
 import TableList from "../../components/TableList";
