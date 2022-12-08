@@ -2,10 +2,42 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import tw from "twrnc";
 import React from "react";
 
-export default function TableItem({ index, onAction }) {
+export default function TableItem({ index, onAction, arr }) {
+  const [shapes, setShapes] = React.useState(null);
+
+  const determineShape = () => {
+    if (!arr) {
+      console.log("No array");
+      return;
+    }
+
+    const shapesArray = arr.map((item, index) => {
+      return index % 2 === 0 ? "rectangle" : "circle";
+    });
+
+    let currentShape = shapesArray[0];
+    let nextShape = shapesArray[1];
+    const shapesResult = [];
+
+    shapesArray.forEach((item, i, array) => {
+      if (i >= 1 && i < array.length - 1) {
+        currentShape = item;
+        nextShape = array[i + 1];
+        shapesResult.push(currentShape);
+        shapesResult.push(nextShape);
+      }
+    });
+
+    setShapes(shapesResult);
+  };
+
+  React.useEffect(() => {
+    determineShape();
+  }, []);
+
   return (
     <>
-      {index % 2 === 0 ? (
+      {shapes && shapes[index] === "rectangle" ? (
         <TouchableOpacity
           style={tw`flex justify-center items-center`}
           onPress={() => onAction(index + 1)}

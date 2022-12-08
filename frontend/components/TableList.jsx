@@ -18,6 +18,7 @@ export default function TableList({ arr, onAction }) {
         <TableItem
           index={index}
           onAction={(index) => handleTableSelection(index)}
+          arr={arr}
         />
       )}
     />
