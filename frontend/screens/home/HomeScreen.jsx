@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <View style={tw`w-full items-center justify-center px-8`}>
           <TableList
-            arr={Array(+noOfTables).fill("")}
+            arr={Array.from(Array(+noOfTables).keys())}
             onAction={(index) => handleTableClick(index)}
           />
         </View>
