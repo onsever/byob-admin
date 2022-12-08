@@ -30,12 +30,13 @@ const orderService = (() => {
 
         if (table.orderId) {
           await Order.findByIdAndUpdate(table.orderId, {
-            order: { ...params, isComplete: false },
+            order: params.order,
+            isComplete: false,
           });
           resolve("Order Updated");
         } else {
           const newOrder = Order({
-            ...params,
+            order: params.order,
             isComplete: false,
             drinkOrder: [],
           });
