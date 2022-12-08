@@ -10,8 +10,8 @@ import { login } from "../../redux/features/authSlice";
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
   const { post, loading, loaded, result, error } = usePost();
@@ -19,13 +19,14 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     if (loaded) {
       if (error) {
+        console.log("error", error);
         Alert.alert("Authentication Failed", error.data);
       } else if (result) {
         let data = result.data;
         dispatch(login(data));
       }
     }
-  }, [loaded])
+  }, [loaded]);
 
   return (
     <SafeAreaView style={tw`flex-1`}>
@@ -58,8 +59,8 @@ export default function LoginScreen({ navigation }) {
           <TouchableOpacity
             style={tw`flex flex-row justify-center align-center`}
             onPress={() => {
-              console.log(('form', form));
-              post('auth/login', form);
+              console.log(("form", form));
+              post("auth/login", form);
             }}
           >
             <Image source={require("../../assets/wine_glass.png")} />
