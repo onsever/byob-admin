@@ -32,7 +32,13 @@ export default function DetailsScreen({ route, navigation }) {
   };
 
   const grandTotalCalculator = (price) => {
+    setGrandTotal(+toTwoDecimal(price) + +toTwoDecimal(gstCalculator(price)));
     return +toTwoDecimal(price) + +toTwoDecimal(gstCalculator(price));
+  };
+
+  const handleGratuity = () => {
+    const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
+    console.log(extraPrice);
   };
 
   React.useEffect(() => {
@@ -54,17 +60,23 @@ export default function DetailsScreen({ route, navigation }) {
       }
       if (result) {
         setData(result);
-        setTotalPrice(
-          result.order.drinkOrder.reduce((acc, cur) => {
-            return acc + cur.price * cur.quantity;
-          }, 0) +
-            result.order.order[0].order.reduce((acc, cur) => {
+        if (result.order) {
+          setTotalPrice(
+            result.order.drinkOrder.reduce((acc, cur) => {
               return acc + cur.price * cur.quantity;
-            }, 0)
-        );
+            }, 0) +
+              result.order.order[0].reduce((acc, cur) => {
+                return acc + cur.price * cur.quantity;
+              }, 0)
+          );
+        }
       }
     }
   }, [loaded]);
+
+  React.useEffect(() => {
+    grandTotalCalculator(totalPrice);
+  }, [totalPrice]);
 
   return (
     <View style={tw`w-full h-full`}>
@@ -183,23 +195,24 @@ export default function DetailsScreen({ route, navigation }) {
                   {toTwoDecimal(gstCalculator(totalPrice))}$
                 </Text>
               </View>
-              <View
-                style={tw`w-full flex-row items-center justify-between mt-2`}
-              >
-                <Text style={tw`font-semibold`}>Grand Total</Text>
-                <Text style={tw``}>{grandTotalCalculator(totalPrice)}$</Text>
-              </View>
               {/* Gratuity */}
               <View
                 style={tw`w-full flex-row items-center justify-between mt-2`}
               >
-                <Text style={tw`font-semibold`}>Gratuity</Text>
+                <Text style={tw`font-semibold`}>Gratuity (13%)</Text>
                 <CheckBox
                   onAction={(checked, setChecked) => {
                     setChecked(!checked);
                     setGratuityClicked(checked);
+                    handleGratuity();
                   }}
                 />
+              </View>
+              <View
+                style={tw`w-full flex-row items-center justify-between mt-2`}
+              >
+                <Text style={tw`font-semibold`}>Grand Total</Text>
+                <Text style={tw``}>{grandTotal}$</Text>
               </View>
             </View>
           ) : (

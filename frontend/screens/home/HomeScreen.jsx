@@ -38,6 +38,8 @@ export default function HomeScreen({ navigation }) {
     }
   }, [loaded]);
 
+  console.log(noOfTables);
+
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
       <View>
