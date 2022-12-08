@@ -14,6 +14,7 @@ const tableService = (() => {
             $lte: moment(today).endOf("day").toDate(),
           },
           checkedOut: false,
+          tableNo: params.tableNo,
         }).exec();
         if (todaysTable) {
           reject("Table has already been reserved.");
