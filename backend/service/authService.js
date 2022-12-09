@@ -88,9 +88,11 @@ const authService = (() => {
         if (credentials.isGoogleSignIn) {
           const user = await User.findOne({ email: credentials.email });
           if (user) {
-            login(credentials.email, credentials.id, true).then((result) => {
-              resolve(result);
-            });
+            userLogin(credentials.email, credentials.id, true).then(
+              (result) => {
+                resolve(result);
+              }
+            );
           } else {
             const newUser = new User({
               firstName: credentials["given_name"],

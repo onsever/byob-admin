@@ -1,17 +1,21 @@
 import express from "express";
 import userService from "../service/userService.js";
 import httpHelper from "../utils/httpHelper.js";
+import auth from "../middleware/authMiddleware.js";
 
 const route = express.Router();
 
-route.get("/table", (req, res) => {
+route.get("/table", auth, (req, res) => {
   try {
     userService
-      .getUserTableDetail(req.user.id)
+      .getUserTableDetail(req.user._id)
       .then((result) => {
         httpHelper.success(res, result);
       })
-      .catch((err) => httpHelper.error(res, err));
+      .catch((err) => {
+        console.log("err", err);
+        httpHelper.error(res, err);
+      });
   } catch (e) {
     httpHelper.error(res, e);
   }
