@@ -1,4 +1,10 @@
-import { View, Text, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import { useFetch } from "../../hooks/useFetch";
@@ -65,7 +71,7 @@ export default function DetailsScreen({ route, navigation }) {
             result.order.drinkOrder.reduce((acc, cur) => {
               return acc + cur.price * cur.quantity;
             }, 0) +
-              result.order.order[0].reduce((acc, cur) => {
+              result.order.order.reduce((acc, cur) => {
                 return acc + cur.price * cur.quantity;
               }, 0)
           );
@@ -161,21 +167,19 @@ export default function DetailsScreen({ route, navigation }) {
               })}
               {/* Food Orders Table */}
               {data?.order.order &&
-                data?.order.order.map((item, i) => {
-                  return item.order.map((item, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={tw`w-full flex-row justify-between mt-2`}
-                      >
-                        <Text style={tw`font-semibold`}>Food {index + 1}</Text>
-                        <View style={tw`flex-row items-center`}>
-                          <Text style={tw`mr-2`}>{item.price}$</Text>
-                          <Text>{item.quantity}</Text>
-                        </View>
+                data?.order.order.map((item, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={tw`w-full flex-row justify-between mt-2`}
+                    >
+                      <Text style={tw`font-semibold`}>Food {index + 1}</Text>
+                      <View style={tw`flex-row items-center`}>
+                        <Text style={tw`mr-2`}>{item.price}$</Text>
+                        <Text>{item.quantity}</Text>
                       </View>
-                    );
-                  });
+                    </View>
+                  );
                 })}
               {/* Calculation */}
               <View style={tw`w-full items-start mt-2 border-b`}>
@@ -214,6 +218,17 @@ export default function DetailsScreen({ route, navigation }) {
                 <Text style={tw`font-semibold`}>Grand Total</Text>
                 <Text style={tw``}>{grandTotal}$</Text>
               </View>
+              <TouchableOpacity
+                style={tw`bg-red-400 px-4 py-2 rounded-lg mt-4`}
+                onPress={() => {
+                  navigation.navigate("PaymentScreen");
+                }}
+              >
+                <Text style={tw`font-semibold text-white`}>Checkout</Text>
+              </TouchableOpacity>
+              {route.params.paymentMethod && (
+                <Text>Payment Method: {route.params.paymentMethod}</Text>
+              )}
             </View>
           ) : (
             <View style={tw`w-[90%] h-2/3 items-center justify-center`}>
