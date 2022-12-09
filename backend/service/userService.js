@@ -1,12 +1,15 @@
+import moment from "moment";
+
 import User from "../model/user.js";
 import Table from "../model/table.js";
 import Order from "../model/order.js";
+
+const today = moment().startOf("day");
 
 const constantService = (() => {
   const getUserById = (id) => {
     return new Promise(async (resolve, reject) => {
       User.findById(id, { password: 0 }).then((result) => {
-        console.log(result);
         delete result.password;
         resolve(result);
       });
@@ -21,14 +24,20 @@ const constantService = (() => {
           $lte: moment(today).endOf("day").toDate(),
         },
         userId: id,
+        checkedOut: false,
       }).exec();
 
-      const order = await Order.findById(table.orderId);
+      if (table) {
+        let result = {
+          tableNo: table.tableNo,
+          order: null,
+        };
+        if (table.orderId) result.order = await Order.findById(table.orderId);
 
-      resolve({
-        tableNo: table.tableNo,
-        order: order.order,
-      });
+        resolve(result);
+      } else {
+        reject("No table found for the user.");
+      }
     });
   };
 
