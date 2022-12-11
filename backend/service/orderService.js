@@ -88,6 +88,8 @@ const orderService = (() => {
             const order = await Order.findById(table.orderId);
             order.drinkOrder = [...order.drinkOrder, params];
             await order.save();
+            await checkAndChangePrice(drink.category);
+
             resolve("Order Updated");
           } else {
             const newOrder = Order({
@@ -96,7 +98,7 @@ const orderService = (() => {
               drinkOrder: [params],
             });
             await newOrder.save();
-            checkAndChangePrice(drink.category);
+            await checkAndChangePrice(drink.category);
 
             await Table.findByIdAndUpdate(table.id, { orderId: newOrder.id });
 
@@ -192,8 +194,10 @@ const orderService = (() => {
             { isHighest: false }
           );
           drinkDetail.isHighest = true;
-          drinkDetail.currentPrice =
-            +drinkDetail.guranteedPrice + 0.2 * +drinkDetail.guranteedPrice;
+          drinkDetail.currentPrice = (
+            +drinkDetail.guranteedPrice +
+            0.2 * +drinkDetail.guranteedPrice
+          ).toFixed(2);
           await drinkDetail.save();
         }
       });

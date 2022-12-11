@@ -18,6 +18,8 @@ const constantService = (() => {
 
   const getUserTableDetail = (id) => {
     return new Promise(async (resolve, reject) => {
+      console.log("today.toDate()", today.toDate());
+      console.log("moment", moment(today).endOf("day").toDate());
       const table = await Table.findOne({
         createdAt: {
           $gte: today.toDate(),
