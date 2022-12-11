@@ -78,7 +78,8 @@ const menuService = (() => {
   const getDrinkList = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const drinkList = await Drink.find(
+        const categories = await Category.find().exec();
+        const drinks = await Drink.find(
           {},
           {
             title: 1,
@@ -86,23 +87,26 @@ const menuService = (() => {
             guranteedPrice: 1,
             currentPrice: 1,
             category: 1,
+            image: 1,
+            isHighest: 1,
           }
-        );
-        let result = [];
+        ).exec();
 
-        await Promise.all(
-          drinkList.map(async (drink) => {
-            if (!drink.isHighest || !drink.currentPrice) {
-              drink.currentPrice = drink.guranteedPrice;
-            }
-            let category = await Category.findById(drink.category);
-            result.push({
-              ...drink.toJSON(),
-              categoryName: category.toJSON().name,
-            });
-            return result;
-          })
-        );
+        let result = categories.map((cat) => {
+          return {
+            title: cat.name,
+            data: drinks
+              .filter((x) => x.category === cat.id)
+              .map((drink) => {
+                if (!drink.isHighest || !drink.currentPrice) {
+                  drink.currentPrice = drink.guranteedPrice;
+                }
+                drink.isHighest = drink.isHighest || false;
+                return drink;
+              }),
+          };
+        });
+
         resolve(result);
       } catch (e) {
         reject(e);
