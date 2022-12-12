@@ -104,13 +104,13 @@ const authService = (() => {
 
             await newUser.save();
 
-            const token = tokenHelper.createToken(newUser._id, newUser.email);
+            const token = tokenHelper.createToken(newUser, false);
 
             delete newUser.password;
 
             resolve({
               token,
-              ...newUser,
+              ...newUser.toJSON(),
             });
           }
           resolve(true);
@@ -130,10 +130,7 @@ const authService = (() => {
               newUser.password = await bcrypt.hash(newUser.password, salt);
               const userInfo = await newUser.save();
 
-              const token = tokenHelper.createToken(
-                userInfo._id,
-                newUser.email
-              );
+              const token = tokenHelper.createToken(newUser, false);
 
               resolve({
                 token,

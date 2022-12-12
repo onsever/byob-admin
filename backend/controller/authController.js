@@ -37,23 +37,27 @@ route.post("/user/login", (req, res) => {
 
 route.post("/user/register", (req, res) => {
   try {
-    authService
-      .idScan(req.body.downloadURL)
-      .then((result) => {
-        const isVerified = verifyBirthDate(result[0].description);
-
-        if (isVerified.isAdult) {
-          authService
-            .userRegister({ ...req.body.userObj, dob: isVerified.birthDate })
-            .then((result) => {
-              httpHelper.success(res, { ...result, isAdult: true });
-            })
-            .catch((err) => httpHelper.error(res, err));
-        } else {
-          httpHelper.success(res, isVerified);
-        }
-      })
-      .catch((err) => httpHelper.error(res, err));
+    // authService
+    //   .idScan(req.body.downloadURL)
+    //   .then((result) => {
+    //     const isVerified = verifyBirthDate(result[0].description);
+    const isVerified = { isAdult: true, birthDate: new Date() };
+    if (isVerified.isAdult) {
+      authService
+        .userRegister({
+          ...req.body.userObj,
+          dob: isVerified.birthDate,
+          isGoogleSignIn: true,
+        })
+        .then((result) => {
+          httpHelper.success(res, { ...result, isAdult: true });
+        })
+        .catch((err) => httpHelper.error(res, err));
+    } else {
+      httpHelper.success(res, isVerified);
+    }
+    // })
+    // .catch((err) => httpHelper.error(res, err));
   } catch (e) {
     httpHelper.error(res, e);
   }
