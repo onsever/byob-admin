@@ -80,7 +80,7 @@ const orderService = (() => {
         // check here
         const acceptBid = checkBid(
           +params.price,
-          +drink.guranteedPrice,
+          drink.isHighest ? +drink.currentPrice : +drink.guranteedPrice,
           +params.quantity
         );
         if (acceptBid) {
@@ -130,6 +130,8 @@ const orderService = (() => {
 
   const checkAndChangePrice = () => {
     return new Promise(async (resolve, reject) => {
+      console.log("today.toDate()", today.toDate());
+      console.log("moment(today).endOf", moment(today).endOf("day").toDate());
       // getting All order from today
       const orders = await Order.find(
         {
@@ -139,7 +141,8 @@ const orderService = (() => {
           },
         },
         { drinkOrder: 1, _id: 0 }
-      );
+      ).exec();
+      console.log("order", orders.length);
       const drinkList = await Drink.find();
       // const categories = await Category.find();
 
@@ -188,9 +191,9 @@ const orderService = (() => {
       const update = groupArrays.map(async (category) => {
         const highestOrdered = category.drinks[0].id;
         const drinkDetail = await Drink.findById(highestOrdered);
-        if (!drinkDetail.isHighest) {
+        if (!drinkDetail.toJSON().isHighest) {
           await Drink.findOneAndUpdate(
-            { isHighest: true },
+            { isHighest: true, _id: drinkDetail._id },
             { isHighest: false }
           );
           drinkDetail.isHighest = true;
