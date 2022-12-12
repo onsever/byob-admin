@@ -22,6 +22,10 @@ export default function PaymentScreen({ route, navigation }) {
       paymentMethod: paymentMethod,
       totalPaid: totalPrice.toFixed(2),
     });
+
+    if (result) {
+      navigation.navigate("HomeScreen");
+    }
   };
 
   React.useLayoutEffect(() => {
