@@ -88,9 +88,7 @@ export default function EditFoodScreen({ navigation, route }) {
             {postFood.loading ? (
               <ActivityIndicator />
             ) : (
-              // <Text style={{ color: "white" }}>
-              //   {prevFood ? "Edit" : "Add"} Food
-              // </Text>
+             
               <View>
                 {prevFood ? (
                   <FontAwesome

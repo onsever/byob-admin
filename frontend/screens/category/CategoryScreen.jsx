@@ -48,7 +48,7 @@ export default function CategoryScreen({ navigation }) {
         >
           {categories?.map((x) => {
             return (
-              <View style={tw`shadow-lg bg-[#F9F9F9] mx-2 my-1 items-center`}>
+              <View style={tw`shadow-md bg-[#F9F9F9] mx-2 my-1 items-center`}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("EditCategoryScreen", {
@@ -56,7 +56,7 @@ export default function CategoryScreen({ navigation }) {
                       goBackHandler: getAllCategory,
                     });
                   }}
-                  style={tw`px-4 py-6 shadow-lg`}
+                  style={tw`px-4 py-6`}
                 >
                   <View style={tw`flex flex-row justify-between items-center`}>
                     <Text style={tw`text-5 font-thin`}>{x.name}</Text>
