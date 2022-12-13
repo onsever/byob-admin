@@ -24,6 +24,8 @@ const TabNavigator = () => {
             iconName = focused ? "cart" : "cart-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
+          } else if (route.name === "User") {
+            iconName = focused ? "people" : "people-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -39,6 +41,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Drink" component={DrinkStackNavigator} />
       <Tab.Screen name="Food" component={FoodStackNavigator} />
       <Tab.Screen name="Category" component={CategoryStackNavigator} />
+      <Tab.Screen name="User" component={ProfileStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );

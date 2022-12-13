@@ -62,7 +62,7 @@ export default function EditFoodScreen({ navigation, route }) {
       <TouchableOpacity
         style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
         onPress={() => {
-          postFood.post("menu/food", food);
+          if (food.title && food.price) postFood.post("menu/food", food);
         }}
       >
         {postFood.loading ? (

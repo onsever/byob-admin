@@ -54,7 +54,7 @@ export default function EditCategoryScreen({ navigation, route }) {
       <TouchableOpacity
         style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
         onPress={() => {
-          postCategory.post("menu/category", category);
+          if (category.name) postCategory.post("menu/category", category);
         }}
       >
         {postCategory.loading ? (

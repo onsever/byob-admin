@@ -41,7 +41,7 @@ export default function EditDrinkScreen({ navigation, route }) {
   useEffect(() => {
     if (deleteDrink.error) {
       console.log("Error on post drink", deleteDrink.error);
-      Alert.alert("Failed", deleteDrink.error.data || deleteDrink.error);
+      Alert.alert("Failed", deleteDrink.error?.data || "");
     }
 
     if (deleteDrink.result) {
@@ -87,7 +87,13 @@ export default function EditDrinkScreen({ navigation, route }) {
       <TouchableOpacity
         style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
         onPress={() => {
-          postDrink.post("menu/drink", drink);
+          if (
+            drink.title &&
+            drink.price &&
+            drink.guranteedPrice &&
+            drink.category
+          )
+            postDrink.post("menu/drink", drink);
         }}
       >
         {postDrink.loading ? (
