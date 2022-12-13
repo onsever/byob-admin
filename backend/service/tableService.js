@@ -69,9 +69,34 @@ const tableService = (() => {
     });
   };
 
+  const getTableDetailsByUserId = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const table = await Table.find({
+          userId: id,
+        }).exec();
+
+        let orders = [];
+
+        const order = table.map(async (t, i) => {
+          const o = await Order.findById(t.orderId);
+          orders.push(o);
+          return table;
+        });
+
+        await Promise.all(order);
+
+        resolve(orders);
+      } catch (e) {
+        console.log("error", e);
+      }
+    });
+  };
+
   return {
     createTable: createTable,
     getTableDetails: getTableDetails,
+    getTableDetailsByUserId: getTableDetailsByUserId,
   };
 })();
 
