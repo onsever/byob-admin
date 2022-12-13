@@ -18,6 +18,19 @@ route.post("/", auth, (req, res) => {
   }
 });
 
+route.get("/all", auth, (req, res) => {
+  try {
+    tableService
+      .getTableDetailsByUserId(req.user._id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.get("/:number", auth, (req, res) => {
   try {
     tableService
