@@ -69,9 +69,32 @@ const tableService = (() => {
     });
   };
 
+  const getAllTableReservation = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const today = moment().startOf("day");
+        const table = await Table.find(
+          {
+            createdAt: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf("day").toDate(),
+            },
+            checkedOut: false,
+          },
+          { checkedOut: 1, tableNo: 1, _id: 0 }
+        ).exec();
+
+        resolve(table);
+      } catch (e) {
+        reject("Error while getting table info.");
+      }
+    });
+  };
+
   return {
     createTable: createTable,
     getTableDetails: getTableDetails,
+    getAllTableReservation: getAllTableReservation,
   };
 })();
 
