@@ -43,7 +43,7 @@ export default function DetailsScreen({ route, navigation }) {
     return +toTwoDecimal(price) + +toTwoDecimal(gstCalculator(price));
   };
 
-  const handleGratuity = () => {
+   const handleGratuity = () => {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
 
     if (gratuityClicked) {

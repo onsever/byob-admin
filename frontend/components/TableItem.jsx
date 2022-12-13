@@ -39,67 +39,44 @@ export default function TableItem({ index, onAction, arr }) {
     <>
       {shapes && shapes[index] === "rectangle" ? (
         <TouchableOpacity
-          style={tw`flex justify-center items-center`}
+          style={tw`flex justify-center items-center mb-5 px-2`}
           onPress={() => onAction(index + 1)}
         >
-          <View style={tw`flex flex-row justify-between w-30`}>
-            <Image source={require("../assets/chair.png")} />
-            <Image source={require("../assets/chair.png")} />
-          </View>
-          <View
-            style={tw`border border-black bg-gray-300 w-30 h-20 flex justify-center items-center`}
-          >
+          {
             <View
-              style={tw`border-solid border-2 border-white rounded-full bg-white h-10 w-10 flex items-center justify-center`}
+              style={tw`flex flex-row bg-white items-center justify-center rounded-lg shadow-md w-40 h-20 relative`}
             >
-              <Text>{index + 1}</Text>
+              <View>
+              <Image source={require("../assets/cutlery.png")} />
+              </View>
+              <View
+                style={tw`absolute top-[-2] right-[-2] rounded-full shadow-md bg-white px-2 py-2`}
+              >
+                <Text style={tw`px-3 py-2 rounded-full shadow-lg`}>{index + 1}</Text>
+              </View>
             </View>
-          </View>
-          <View style={tw`flex flex-row justify-between w-30`}>
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "180deg" }] }}
-            />
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "180deg" }] }}
-            />
-          </View>
+          }
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          style={tw`flex justify-center items-center`}
+          style={tw`flex justify-center items-center mb-5 px-2`}
           onPress={() => onAction(index + 1)}
         >
-          <View style={tw`flex flex-row justify-between w-40`}>
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "-44.92deg" }] }}
-            />
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "44.92deg" }] }}
-            />
-          </View>
-          <View
-            style={tw`border border-black bg-gray-300 flex justify-center items-center rounded-full h-20 w-20`}
-          >
+          {
             <View
-              style={tw`border-solid border-2 border-white rounded-full bg-white h-7 w-7 flex items-center justify-center`}
+              style={tw`flex flex-row bg-white justify-center items-center w-25 h-25 rounded-full shadow-md`}
             >
-              <Text>{index + 1}</Text>
+              <View
+                style={tw`absolute top-[-1] right-[-1] rounded-lg shadow-md bg-white px-2 py-1`}
+              >
+                <Text style={tw`px-2 py-1 rounded-lg shadow-lg`}>{index + 1}</Text>
+              </View>
+              <View>
+              <Image source={require("../assets/cutlery.png")} />
+                
+              </View>
             </View>
-          </View>
-          <View style={tw`flex flex-row justify-between w-40`}>
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "-130.47deg" }] }}
-            />
-            <Image
-              source={require("../assets/chair.png")}
-              style={{ transform: [{ rotate: "130.47deg" }] }}
-            />
-          </View>
+          }
         </TouchableOpacity>
       )}
     </>
