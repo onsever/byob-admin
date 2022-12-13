@@ -17,7 +17,6 @@ import { useFetch } from "../../hooks/useFetch";
 export default function HomeScreen({ navigation }) {
   const [noOfTables, setNoOfTables] = React.useState(null);
   const { loaded, loading, error, fetch, result } = useFetch();
-  const dispatch = useDispatch();
 
   const handleTableClick = (index) => {
     navigation.navigate("DetailsScreen", { item: index });
@@ -25,7 +24,7 @@ export default function HomeScreen({ navigation }) {
 
   React.useEffect(() => {
     fetch("constant");
-  }, []);
+  }, [1]);
 
   React.useEffect(() => {
     if (loaded) {
@@ -37,8 +36,6 @@ export default function HomeScreen({ navigation }) {
       }
     }
   }, [loaded]);
-
-  console.log(noOfTables);
 
   return (
     <SafeAreaView

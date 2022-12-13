@@ -44,6 +44,19 @@ route.get("/all/:id", auth, (req, res) => {
   }
 });
 
+route.get("/all-reservation", auth, (req, res) => {
+  try {
+    tableService
+      .getAllTableReservation()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.get("/:number", auth, (req, res) => {
   try {
     tableService
