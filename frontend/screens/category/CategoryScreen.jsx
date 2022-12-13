@@ -40,7 +40,7 @@ export default function CategoryScreen({ navigation }) {
           <Ionicons name="add-circle" size={52} color="#640100" />
         </TouchableOpacity>
       </View>
-      <View style={tw`flex-1 mx-10`}>
+      <View style={tw`flex-1 mx-2 mt-5`}>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={getAllCategory} />
@@ -48,7 +48,7 @@ export default function CategoryScreen({ navigation }) {
         >
           {categories?.map((x) => {
             return (
-              <View style={tw`shadow-lg bg-[#F9F9F9] m-3 items-center`}>
+              <View style={tw`shadow-lg bg-[#F9F9F9] mx-2 my-1 items-center`}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("EditCategoryScreen", {
