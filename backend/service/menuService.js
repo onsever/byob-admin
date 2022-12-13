@@ -114,6 +114,29 @@ const menuService = (() => {
     });
   };
 
+  const getAllDrink = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const drinks = await Drink.find(
+          {},
+          {
+            title: 1,
+            price: 1,
+            guranteedPrice: 1,
+            currentPrice: 1,
+            category: 1,
+            image: 1,
+            isHighest: 1,
+          }
+        ).exec();
+
+        resolve(drinks);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
   const saveDrinkList = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -149,6 +172,7 @@ const menuService = (() => {
     getDrinkList: getDrinkList,
     saveDrinkList: saveDrinkList,
     saveDrink: saveDrink,
+    getAllDrink: getAllDrink,
   };
 })();
 

@@ -96,6 +96,19 @@ route.get("/drink", auth, (req, res) => {
   }
 });
 
+route.get("/drink/all", auth, (req, res) => {
+  try {
+    menuService
+      .getAllDrink()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/drink", auth, (req, res) => {
   try {
     menuService
