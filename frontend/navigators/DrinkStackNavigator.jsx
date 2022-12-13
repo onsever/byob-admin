@@ -6,16 +6,10 @@ const Stack = createNativeStackNavigator();
 
 const DrinkStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerBackTitle: "" }}>
       <Stack.Group>
-        <Stack.Screen
-          name="DrinkScreen"
-          component={DrinkScreen}
-        />
-        <Stack.Screen
-          name="EditDrinkScreen"
-          component={EditDrinkScreen}
-        />
+        <Stack.Screen name="DrinkScreen" component={DrinkScreen} />
+        <Stack.Screen name="EditDrinkScreen" component={EditDrinkScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

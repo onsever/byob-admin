@@ -153,9 +153,19 @@ const menuService = (() => {
   const saveDrink = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newDrink = Drink(params);
-        await newDrink.save();
-        resolve(newDrink);
+        if (params._id) {
+          await Drink.findByIdAndUpdate(params._id, {
+            $set: params,
+          }).catch((err) => {
+            console.log("Error in update drink", err);
+            reject("Drink update failed.");
+          });
+          resolve("Drink Updated Successfully");
+        } else {
+          const newDrink = new Drink(params);
+          await newDrink.save();
+          resolve("Drink Added Successfully");
+        }
       } catch (e) {
         reject(e);
       }
