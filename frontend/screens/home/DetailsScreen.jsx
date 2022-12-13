@@ -163,7 +163,9 @@ export default function DetailsScreen({ route, navigation }) {
                     key={index}
                     style={tw`w-full flex-row justify-between mt-2`}
                   >
-                    <Text style={tw`font-semibold`}>Drink {index + 1}</Text>
+                    <Text style={tw`font-semibold`}>
+                      {item.name || "Drink"}
+                    </Text>
                     <View style={tw`flex-row items-center`}>
                       <Text style={tw`mr-2`}>{item.price}$</Text>
                       <Text>{item.quantity}</Text>
@@ -179,7 +181,7 @@ export default function DetailsScreen({ route, navigation }) {
                       key={index}
                       style={tw`w-full flex-row justify-between mt-2`}
                     >
-                      <Text style={tw`font-semibold`}>Food {index + 1}</Text>
+                      <Text style={tw`font-semibold`}>{item.name}</Text>
                       <View style={tw`flex-row items-center`}>
                         <Text style={tw`mr-2`}>{item.price}$</Text>
                         <Text>{item.quantity}</Text>
@@ -215,6 +217,13 @@ export default function DetailsScreen({ route, navigation }) {
                     setChecked(!checked);
                     setGratuityClicked(checked);
                     handleGratuity();
+                    data?.order.drinkOrder.map((item) => {
+                      console.log(item);
+                    });
+
+                    data?.order.order.map((item) => {
+                      console.log(item);
+                    });
                   }}
                 />
               </View>
