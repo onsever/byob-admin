@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text, View, SafeAreaView } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Text,
+  View,
+  SafeAreaView,
+} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { useFetch } from "../../hooks/useFetch";
 import { Picker } from "@react-native-picker/picker";
 import { usePost } from "../../hooks/usePost";
 import { useDelete } from "../../hooks/useDelete";
 import tw from "twrnc";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function EditDrinkScreen({ navigation, route }) {
@@ -93,23 +98,25 @@ export default function EditDrinkScreen({ navigation, route }) {
           />
         </View>
         <View style={tw`flex flex-col mb-5 bg-white py-4 rounded-lg`}>
-        <Text style={tw`mb-2 font-thin text-4 text-center`}>Select Category</Text>
-        {fetchCategory.loaded && (
-          <Picker
-            selectedValue={drink.category}
-            onValueChange={(itemValue, itemIndex) =>
-              setDrink({ ...drink, category: itemValue })
-            }
-          >
-            {fetchCategory.result.map((x, i) => {
-              return <Picker.Item label={x.name} value={x._id} />;
-            })}
-          </Picker>
-        )}
+          <Text style={tw`mb-2 font-thin text-4 text-center`}>
+            Select Category
+          </Text>
+          {fetchCategory.loaded && (
+            <Picker
+              selectedValue={drink.category}
+              onValueChange={(itemValue, itemIndex) =>
+                setDrink({ ...drink, category: itemValue })
+              }
+            >
+              {fetchCategory.result.map((x, i) => {
+                return <Picker.Item label={x.name} value={x._id} />;
+              })}
+            </Picker>
+          )}
         </View>
         <View style={tw`flex flex-row justify-center items-center`}>
           <TouchableOpacity
-          style={tw`mr-5`}
+            style={tw`mr-5`}
             onPress={() => {
               if (
                 drink.title &&
@@ -124,14 +131,11 @@ export default function EditDrinkScreen({ navigation, route }) {
               <ActivityIndicator />
             ) : (
               <View>
-                {/* <Text style={{ color: "white" }}>
-              {prevDrink ? "Edit" : "Add"} Drink
-            </Text> */}
                 {prevDrink ? (
                   <FontAwesome
                     name="pencil-square-o"
                     size={34}
-                    color="#640100"
+                    color="#808080"
                   />
                 ) : (
                   <FontAwesome name="plus-circle" size={34} color="#640100" />
