@@ -21,6 +21,19 @@ route.get("/table", auth, (req, res) => {
   }
 });
 
+route.get("/all", auth, (req, res) => {
+  try {
+    userService
+      .getAllUsers()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.get("/:id", (req, res) => {
   try {
     userService

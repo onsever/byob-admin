@@ -31,6 +31,19 @@ route.get("/all", auth, (req, res) => {
   }
 });
 
+route.get("/all/:id", auth, (req, res) => {
+  try {
+    tableService
+      .getTablesByUserId(req.params.id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.get("/:number", auth, (req, res) => {
   try {
     tableService
