@@ -1,12 +1,10 @@
-import { View, Text, TouchableOpacity, Alert, Image } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import tw from "twrnc";
 import { usePost } from "../../hooks/usePost";
 
 export default function PaymentScreen({ route, navigation }) {
   const [paymentMethod, setPaymentMethod] = React.useState(null);
-  const [debitColor, setDebitColor] = React.useState("");
-  const [cashColor, setCashColor] = React.useState("");
   const { totalPrice, orderId } = route.params;
   const { post, loaded, loading, error, result } = usePost();
 
@@ -20,8 +18,12 @@ export default function PaymentScreen({ route, navigation }) {
 
     post("order/complete/" + orderId, {
       paymentMethod: paymentMethod,
-      totalPaid: totalPrice.toFixed(2),
+      totalPaid: totalPrice,
     });
+
+    if (result) {
+      navigation.navigate("HomeScreen");
+    }
   };
 
   React.useLayoutEffect(() => {
