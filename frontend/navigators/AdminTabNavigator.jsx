@@ -5,6 +5,7 @@ import ProfileStackNavigator from "./ProfileStackNavigator";
 import DrinkStackNavigator from "./DrinkStackNavigator";
 import FoodStackNavigator from "./FoodStackNavigator";
 import CategoryStackNavigator from "./CategoryStackNavigator";
+import UserStackNavigator from "./UserStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Drink" component={DrinkStackNavigator} />
       <Tab.Screen name="Food" component={FoodStackNavigator} />
       <Tab.Screen name="Category" component={CategoryStackNavigator} />
-      <Tab.Screen name="User" component={ProfileStackNavigator} />
+      <Tab.Screen name="User" component={UserStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );

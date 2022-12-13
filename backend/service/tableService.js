@@ -93,10 +93,34 @@ const tableService = (() => {
     });
   };
 
+  const getTablesByUserId = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tables = await Table.find({
+          userId: id,
+        }).exec();
+
+        let orders = [];
+
+        const order = tables.map(async (t, i) => {
+          const o = await Order.findById(t.orderId);
+          orders.push(o);
+          return tables;
+        });
+
+        await Promise.all(order);
+        resolve(orders);
+      } catch (e) {
+        console.log("error", e);
+      }
+    });
+  };
+
   return {
     createTable: createTable,
     getTableDetails: getTableDetails,
     getTableDetailsByUserId: getTableDetailsByUserId,
+    getTablesByUserId: getTablesByUserId,
   };
 })();
 

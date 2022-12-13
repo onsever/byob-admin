@@ -43,9 +43,22 @@ const constantService = (() => {
     });
   };
 
+  const getAllUsers = () => {
+    return new Promise(async (resolve, reject) => {
+      User.find().then((result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject("No users found.");
+        }
+      });
+    });
+  };
+
   return {
     getUserById: getUserById,
     getUserTableDetail: getUserTableDetail,
+    getAllUsers: getAllUsers,
   };
 })();
 
