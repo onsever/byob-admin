@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../utils/Colors";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import DrinkStackNavigator from "./DrinkStackNavigator";
+import FoodStackNavigator from "./FoodStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ const TabNavigator = () => {
       {/* <Tab.Screen name="Home" component={HomeStackNavigator} /> */}
       {/* <Tab.Screen name="Cart" component={CartStackNavigator} /> */}
       <Tab.Screen name="Drink" component={DrinkStackNavigator} />
-      <Tab.Screen name="Food" component={ProfileStackNavigator} />
+      <Tab.Screen name="Food" component={FoodStackNavigator} />
       <Tab.Screen name="Category" component={ProfileStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>

@@ -18,6 +18,19 @@ route.get("/food", auth, (req, res) => {
   }
 });
 
+route.delete("/food/:id", auth, (req, res) => {
+  try {
+    menuService
+      .deleteFood(req.params.id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/food", auth, (req, res) => {
   try {
     menuService

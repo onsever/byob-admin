@@ -30,9 +30,14 @@ const menuService = (() => {
   const saveFood = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newFood = Food(params);
-        await newFood.save();
-        resolve(newFood);
+        if (params._id) {
+          await Food.findByIdAndUpdate(params._id, { $set: params });
+          resolve("Food Updated Successfully");
+        } else {
+          const newFood = new Food(params);
+          await newFood.save();
+          resolve("Food Added Successfully");
+        }
       } catch (e) {
         reject(e);
       }
@@ -187,6 +192,21 @@ const menuService = (() => {
     });
   };
 
+  const deleteFood = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Food.findByIdAndDelete(id);
+          resolve("Food Deleted.");
+        } else {
+          reject("Food not found.");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
   return {
     getFoodList: getFoodList,
     saveFoodList: saveFoodList,
@@ -199,6 +219,7 @@ const menuService = (() => {
     saveDrink: saveDrink,
     getAllDrink: getAllDrink,
     deleteDrink: deleteDrink,
+    deleteFood: deleteFood,
   };
 })();
 
