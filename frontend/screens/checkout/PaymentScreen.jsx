@@ -1,20 +1,29 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import tw from "twrnc";
+import { usePost } from "../../hooks/usePost";
 
-export default function PaymentScreen({ navigation }) {
+export default function PaymentScreen({ route, navigation }) {
   const [paymentMethod, setPaymentMethod] = React.useState(null);
+  const { totalPrice, orderId } = route.params;
+  const { post, loaded, loading, error, result } = usePost();
 
   const billRef = React.useRef(null);
 
   const handleMethod = () => {
     if (!paymentMethod) {
+      Alert.alert("Please select a payment method.");
       return;
     }
 
-    navigation.navigate("DetailsScreen", {
+    post("order/complete/" + orderId, {
       paymentMethod: paymentMethod,
+      totalPaid: totalPrice,
     });
+
+    if (result) {
+      navigation.navigate("HomeScreen");
+    }
   };
 
   return (

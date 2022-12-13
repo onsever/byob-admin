@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
@@ -44,7 +45,12 @@ export default function DetailsScreen({ route, navigation }) {
 
   const handleGratuity = () => {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
-    console.log(extraPrice);
+
+    if (gratuityClicked) {
+      setGrandTotal(grandTotal + extraPrice);
+    } else {
+      setGrandTotal(totalPrice + extraPrice);
+    }
   };
 
   React.useEffect(() => {
@@ -85,7 +91,7 @@ export default function DetailsScreen({ route, navigation }) {
   }, [totalPrice]);
 
   return (
-    <View style={tw`w-full h-full`}>
+    <ScrollView style={tw`w-full h-full`}>
       {loading && !loaded ? (
         <ActivityIndicator
           size="large"
@@ -219,9 +225,12 @@ export default function DetailsScreen({ route, navigation }) {
                 <Text style={tw``}>{grandTotal}$</Text>
               </View>
               <TouchableOpacity
-                style={tw`bg-red-400 px-4 py-2 rounded-lg mt-4`}
+                style={tw`bg-red-400 px-4 py-2 rounded-lg my-4`}
                 onPress={() => {
-                  navigation.navigate("PaymentScreen");
+                  navigation.navigate("PaymentScreen", {
+                    totalPrice: grandTotal,
+                    orderId: data?.order._id,
+                  });
                 }}
               >
                 <Text style={tw`font-semibold text-white`}>Checkout</Text>
@@ -239,6 +248,6 @@ export default function DetailsScreen({ route, navigation }) {
           )}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
