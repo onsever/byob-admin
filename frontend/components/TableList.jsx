@@ -6,8 +6,8 @@ import { useFetch } from "../hooks/useFetch";
 export default function TableList({ arr, onAction }) {
   const { fetch, loading, loaded, result, error } = useFetch();
   const [tables, setTable] = useState(
-    arr.map((x) => {
-      return { tableNo: x + 1 };
+    arr.map((x, i) => {
+      return { tableNo: i + 1 };
     })
   );
 

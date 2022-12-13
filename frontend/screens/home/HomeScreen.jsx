@@ -1,14 +1,5 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  StatusBar,
-} from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
-// import { logout } from "../../redux/features/authSlice";
 import tw from "twrnc";
 import React from "react";
 import TableList from "../../components/TableList";
@@ -32,7 +23,7 @@ export default function HomeScreen({ navigation }) {
         console.log(error);
       }
       if (result) {
-        setNoOfTables(result[0].value);
+        setNoOfTables(+result[0].value);
       }
     }
   }, [loaded]);
@@ -47,7 +38,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <View style={tw`w-full items-center justify-center px-4 py-2 mb-4`}>
           <TableList
-            arr={Array.from(Array(+noOfTables).keys())}
+            arr={Array(noOfTables).fill("")}
             onAction={(index) => handleTableClick(index)}
           />
         </View>
