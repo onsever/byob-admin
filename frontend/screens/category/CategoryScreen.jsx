@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Text, ScrollView, RefreshControl } from "react-native";
+import { Text, ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useFetch } from "../../hooks/useFetch";
+import tw from "twrnc";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function CategoryScreen({ navigation }) {
   const { fetch, loading, loaded, result, error } = useFetch();
