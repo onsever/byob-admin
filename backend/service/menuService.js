@@ -30,9 +30,14 @@ const menuService = (() => {
   const saveFood = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newFood = Food(params);
-        await newFood.save();
-        resolve(newFood);
+        if (params._id) {
+          await Food.findByIdAndUpdate(params._id, { $set: params });
+          resolve("Food Updated Successfully");
+        } else {
+          const newFood = new Food(params);
+          await newFood.save();
+          resolve("Food Added Successfully");
+        }
       } catch (e) {
         reject(e);
       }
@@ -66,9 +71,29 @@ const menuService = (() => {
   const saveCategory = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newCat = Category(params);
-        await newCat.save();
-        resolve(newCat);
+        if (params._id) {
+          await Category.findByIdAndUpdate(params._id, { $set: params });
+          resolve("Category Updated Successfully");
+        } else {
+          const newCat = Category(params);
+          await newCat.save();
+          resolve("Category Added Successfully");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
+  const deleteCategory = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Category.findByIdAndDelete(id);
+          resolve("Category Deleted.");
+        } else {
+          reject("Category not found.");
+        }
       } catch (e) {
         reject(e);
       }
@@ -114,6 +139,29 @@ const menuService = (() => {
     });
   };
 
+  const getAllDrink = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const drinks = await Drink.find(
+          {},
+          {
+            title: 1,
+            price: 1,
+            guranteedPrice: 1,
+            currentPrice: 1,
+            category: 1,
+            image: 1,
+            isHighest: 1,
+          }
+        ).exec();
+
+        resolve(drinks);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
   const saveDrinkList = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -130,9 +178,49 @@ const menuService = (() => {
   const saveDrink = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newDrink = Drink(params);
-        await newDrink.save();
-        resolve(newDrink);
+        if (params._id) {
+          await Drink.findByIdAndUpdate(params._id, {
+            $set: params,
+          }).catch((err) => {
+            console.log("Error in update drink", err);
+            reject("Drink update failed.");
+          });
+          resolve("Drink Updated Successfully");
+        } else {
+          const newDrink = new Drink(params);
+          await newDrink.save();
+          resolve("Drink Added Successfully");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
+  const deleteDrink = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Drink.findByIdAndDelete(id);
+          resolve("Drink Deleted.");
+        } else {
+          reject("Drink not found.");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
+  const deleteFood = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Food.findByIdAndDelete(id);
+          resolve("Food Deleted.");
+        } else {
+          reject("Food not found.");
+        }
       } catch (e) {
         reject(e);
       }
@@ -149,6 +237,10 @@ const menuService = (() => {
     getDrinkList: getDrinkList,
     saveDrinkList: saveDrinkList,
     saveDrink: saveDrink,
+    getAllDrink: getAllDrink,
+    deleteDrink: deleteDrink,
+    deleteFood: deleteFood,
+    deleteCategory: deleteCategory,
   };
 })();
 

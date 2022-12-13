@@ -41,13 +41,15 @@ const authService = (() => {
       const user = await adminModel.findOne({
         username: username.toLowerCase(),
       });
-      console.log(user);
+      console.log(user.toJSON());
       if (!user) {
         reject("User not Found.");
       } else {
         if (user.password === password) {
           const token = tokenHelper.createToken(user, true);
-          resolve({ token });
+          let u = user.toJSON();
+          delete u.password;
+          resolve({ token, ...u });
         } else reject("Incorrect password.");
       }
     });

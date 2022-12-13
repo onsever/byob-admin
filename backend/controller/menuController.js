@@ -18,6 +18,19 @@ route.get("/food", auth, (req, res) => {
   }
 });
 
+route.delete("/food/:id", auth, (req, res) => {
+  try {
+    menuService
+      .deleteFood(req.params.id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/food", auth, (req, res) => {
   try {
     menuService
@@ -70,6 +83,19 @@ route.post("/category", auth, (req, res) => {
   }
 });
 
+route.delete("/category/:id", auth, (req, res) => {
+  try {
+    menuService
+      .deleteCategory(req.params.id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/category/list", auth, (req, res) => {
   try {
     menuService
@@ -96,10 +122,36 @@ route.get("/drink", auth, (req, res) => {
   }
 });
 
+route.get("/drink/all", auth, (req, res) => {
+  try {
+    menuService
+      .getAllDrink()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/drink", auth, (req, res) => {
   try {
     menuService
       .saveDrink(req.body)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
+route.delete("/drink/:id", auth, (req, res) => {
+  try {
+    menuService
+      .deleteDrink(req.params.id)
       .then((result) => {
         httpHelper.success(res, result);
       })
