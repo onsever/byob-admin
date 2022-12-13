@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Text,
+  SafeAreaView,
+  View,
+} from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { usePost } from "../../hooks/usePost";
 import { useDelete } from "../../hooks/useDelete";
+import tw from "twrnc";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function EditCategoryScreen({ navigation, route }) {
   const prevCategory = route.params?.category;
@@ -43,59 +50,79 @@ export default function EditCategoryScreen({ navigation, route }) {
   }, [deleteCategory.loaded]);
 
   return (
-    <SafeAreaView>
-      <Text>{prevCategory ? "Edit" : "Add"} Category</Text>
-      <TextInput
-        placeholder="Title"
-        value={category.name}
-        onChangeText={(text) => setCategory({ ...category, name: text })}
-      />
-
-      <TouchableOpacity
-        style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
-        onPress={() => {
-          if (category.name) postCategory.post("menu/category", category);
-        }}
-      >
-        {postCategory.loading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={{ color: "white" }}>
+    <SafeAreaView style={tw`flex-1`}>
+      <View style={tw`mx-10 my-5`}>
+        <View style={tw`items-center mb-5`}>
+          <Text style={tw`font-bold text-5`}>
             {prevCategory ? "Edit" : "Add"} Category
           </Text>
-        )}
-      </TouchableOpacity>
+        </View>
+        <View style={tw`flex flex-col mb-3`}>
+          <Text style={tw`mb-4`}>Category Name</Text>
+          <TextInput
+            placeholder="Title"
+            value={category.name}
+            onChangeText={(text) => setCategory({ ...category, name: text })}
+            style={tw`border px-4 py-3 rounded-lg border-[#C5C5C5] font-thin`}
+          />
+        </View>
+        <View style={tw`flex flex-row justify-center items-center mt-5`}>
+          <TouchableOpacity
+            style={tw`mr-5`}
+            onPress={() => {
+              if (category.name) postCategory.post("menu/category", category);
+            }}
+          >
+            {postCategory.loading ? (
+              <ActivityIndicator />
+            ) : (
+              <View>
+                {prevCategory ? (
+                  <FontAwesome
+                    name="pencil-square-o"
+                    size={34}
+                    color="#808080"
+                  />
+                ) : (
+                  <FontAwesome name="plus-circle" size={34} color="#640100" />
+                )}
+              </View>
+            )}
+          </TouchableOpacity>
 
-      {category._id ? (
-        <TouchableOpacity
-          style={{ backgroundColor: "red", padding: 10, margin: 10 }}
-          onPress={() => {
-            Alert.alert(
-              "Delete category",
-              "Are you sure you wan to delete this category?",
-              [
-                {
-                  text: "Delete",
-                  style: "destructive",
-                  onPress: () =>
-                    deleteCategory.doDelete("menu/category/" + category._id),
-                },
-                {
-                  text: "Cancel",
-                },
-              ]
-            );
-          }}
-        >
-          {deleteCategory.loading ? (
-            <ActivityIndicator />
+          {category._id ? (
+            <TouchableOpacity
+              onPress={() => {
+                Alert.alert(
+                  "Delete category",
+                  "Are you sure you wan to delete this category?",
+                  [
+                    {
+                      text: "Delete",
+                      style: "destructive",
+                      onPress: () =>
+                        deleteCategory.doDelete(
+                          "menu/category/" + category._id
+                        ),
+                    },
+                    {
+                      text: "Cancel",
+                    },
+                  ]
+                );
+              }}
+            >
+              {deleteCategory.loading ? (
+                <ActivityIndicator />
+              ) : (
+                <FontAwesome name="trash-o" size={34} color="red" />
+              )}
+            </TouchableOpacity>
           ) : (
-            <Text style={{ color: "white" }}>Delete</Text>
+            <></>
           )}
-        </TouchableOpacity>
-      ) : (
-        <></>
-      )}
+        </View>
+      </View>
     </SafeAreaView>
   );
 }

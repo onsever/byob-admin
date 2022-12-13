@@ -31,7 +31,7 @@ export default function CategoryScreen({ navigation }) {
 
   return (
     <SafeAreaView style={tw`bg-[#F9F9F9] flex-1 relative`}>
-      <View style={tw`absolute bottom-0 right-0`}>
+      <View style={tw`absolute bottom-0 right-0 z-20`}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("EditCategoryScreen");
@@ -40,7 +40,7 @@ export default function CategoryScreen({ navigation }) {
           <Ionicons name="add-circle" size={52} color="#640100" />
         </TouchableOpacity>
       </View>
-      <View style={tw`flex-1 mx-10`}>
+      <View style={tw`flex-1 mx-2 mt-5 relative`}>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={getAllCategory} />
@@ -48,7 +48,7 @@ export default function CategoryScreen({ navigation }) {
         >
           {categories?.map((x) => {
             return (
-              <View style={tw`shadow-lg bg-[#F9F9F9] m-3 items-center`}>
+              <View style={tw`shadow-md bg-[#F9F9F9] mx-2 my-1 items-center`}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("EditCategoryScreen", {
@@ -56,7 +56,7 @@ export default function CategoryScreen({ navigation }) {
                       goBackHandler: getAllCategory,
                     });
                   }}
-                  style={tw`px-4 py-6 shadow-lg`}
+                  style={tw`px-4 py-6`}
                 >
                   <View style={tw`flex flex-row justify-between items-center`}>
                     <Text style={tw`text-5 font-thin`}>{x.name}</Text>
