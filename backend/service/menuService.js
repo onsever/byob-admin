@@ -172,6 +172,21 @@ const menuService = (() => {
     });
   };
 
+  const deleteDrink = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Drink.findByIdAndDelete(id);
+          resolve("Drink Deleted.");
+        } else {
+          reject("Drink not found.");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
   return {
     getFoodList: getFoodList,
     saveFoodList: saveFoodList,
@@ -183,6 +198,7 @@ const menuService = (() => {
     saveDrinkList: saveDrinkList,
     saveDrink: saveDrink,
     getAllDrink: getAllDrink,
+    deleteDrink: deleteDrink,
   };
 })();
 

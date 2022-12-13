@@ -122,6 +122,19 @@ route.post("/drink", auth, (req, res) => {
   }
 });
 
+route.delete("/drink/:id", auth, (req, res) => {
+  try {
+    menuService
+      .deleteDrink(req.params.id)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.post("/drink/list", auth, (req, res) => {
   try {
     menuService

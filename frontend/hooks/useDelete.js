@@ -13,7 +13,7 @@ const useDelete = () => {
     setResult(null);
     setError(null);
     try {
-      const result = await api.delete(path, body, {
+      const result = await api.delete(path, {
         headers: headers,
       });
       setIsLoading(false);

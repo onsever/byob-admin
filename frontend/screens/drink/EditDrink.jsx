@@ -5,11 +5,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFetch } from "../../hooks/useFetch";
 import { Picker } from "@react-native-picker/picker";
 import { usePost } from "../../hooks/usePost";
+import { useDelete } from "../../hooks/useDelete";
 
 export default function EditDrinkScreen({ navigation, route }) {
   const prevDrink = route.params?.drink;
   const fetchCategory = useFetch();
   const postDrink = usePost();
+  const deleteDrink = useDelete();
   const [drink, setDrink] = useState(
     prevDrink || {
       title: "",
@@ -21,7 +23,7 @@ export default function EditDrinkScreen({ navigation, route }) {
 
   useEffect(() => {
     fetchCategory.fetch("menu/category");
-  }, []);
+  }, [1]);
 
   useEffect(() => {
     if (postDrink.error) {
@@ -35,6 +37,19 @@ export default function EditDrinkScreen({ navigation, route }) {
       navigation.goBack();
     }
   }, [postDrink.loaded]);
+
+  useEffect(() => {
+    if (deleteDrink.error) {
+      console.log("Error on post drink", deleteDrink.error);
+      Alert.alert("Failed", deleteDrink.error.data || deleteDrink.error);
+    }
+
+    if (deleteDrink.result) {
+      Alert.alert("Success", deleteDrink.result.data);
+      route.params?.goBackHandler();
+      navigation.goBack();
+    }
+  }, [deleteDrink.loaded]);
 
   return (
     <SafeAreaView>
@@ -78,9 +93,42 @@ export default function EditDrinkScreen({ navigation, route }) {
         {postDrink.loading ? (
           <ActivityIndicator />
         ) : (
-          <Text>{prevDrink ? "Edit" : "Add"} Drink</Text>
+          <Text style={{ color: "white" }}>
+            {prevDrink ? "Edit" : "Add"} Drink
+          </Text>
         )}
       </TouchableOpacity>
+
+      {drink._id ? (
+        <TouchableOpacity
+          style={{ backgroundColor: "red", padding: 10, margin: 10 }}
+          onPress={() => {
+            Alert.alert(
+              "Delete Drink",
+              "Are you sure you wan to delete this drink?",
+              [
+                {
+                  text: "Delete",
+                  style: "destructive",
+                  onPress: () =>
+                    deleteDrink.doDelete("menu/drink/" + drink._id),
+                },
+                {
+                  text: "Cancel",
+                },
+              ]
+            );
+          }}
+        >
+          {deleteDrink.loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={{ color: "white" }}>Delete</Text>
+          )}
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 }

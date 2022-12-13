@@ -9,10 +9,10 @@ export default function DrinkScreen({ navigation }) {
   const [drinks, setDrinks] = useState([]);
 
   useEffect(() => {
-    fetch("menu/drink/all");
-  }, []);
+    getAllDrink();
+  }, [1]);
 
-  const goBackHandler = () => {
+  const getAllDrink = () => {
     fetch("menu/drink/all");
   };
 
@@ -35,7 +35,7 @@ export default function DrinkScreen({ navigation }) {
       </TouchableOpacity>
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={goBackHandler} />
+          <RefreshControl refreshing={loading} onRefresh={getAllDrink} />
         }
       >
         {drinks?.map((x) => {
@@ -44,7 +44,7 @@ export default function DrinkScreen({ navigation }) {
               onPress={() => {
                 navigation.navigate("EditDrinkScreen", {
                   drink: x,
-                  goBackHandler: goBackHandler,
+                  goBackHandler: getAllDrink,
                 });
               }}
               style={{ backgroundColor: "pink", padding: 10, margin: 10 }}
