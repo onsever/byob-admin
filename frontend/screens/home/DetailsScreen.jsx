@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
@@ -42,19 +43,14 @@ export default function DetailsScreen({ route, navigation }) {
     return +toTwoDecimal(price) + +toTwoDecimal(gstCalculator(price));
   };
 
-  const handleGratuity = () => {
+   const handleGratuity = () => {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
-    const newGrandTotal = (totalPrice + extraPrice).toFixed(2);
-
-    console.log(gratuityClicked);
 
     if (gratuityClicked) {
-      setGrandTotal(newGrandTotal);
+      setGrandTotal(grandTotal + extraPrice);
+    } else {
+      setGrandTotal(totalPrice + extraPrice);
     }
-    console.log(totalPrice);
-    console.log(newGrandTotal);
-
-    console.log(grandTotal);
   };
 
   React.useEffect(() => {
@@ -95,7 +91,7 @@ export default function DetailsScreen({ route, navigation }) {
   }, [totalPrice]);
 
   return (
-    <View style={tw`w-full h-full`}>
+    <ScrollView style={tw`w-full h-full`}>
       {loading && !loaded ? (
         <ActivityIndicator
           size="large"
@@ -167,7 +163,9 @@ export default function DetailsScreen({ route, navigation }) {
                     key={index}
                     style={tw`w-full flex-row justify-between mt-2`}
                   >
-                    <Text style={tw`font-semibold`}>Drink {index + 1}</Text>
+                    <Text style={tw`font-semibold`}>
+                      {item.name || "Drink"}
+                    </Text>
                     <View style={tw`flex-row items-center`}>
                       <Text style={tw`mr-2`}>{item.price}$</Text>
                       <Text>{item.quantity}</Text>
@@ -183,7 +181,7 @@ export default function DetailsScreen({ route, navigation }) {
                       key={index}
                       style={tw`w-full flex-row justify-between mt-2`}
                     >
-                      <Text style={tw`font-semibold`}>Food {index + 1}</Text>
+                      <Text style={tw`font-semibold`}>{item.name}</Text>
                       <View style={tw`flex-row items-center`}>
                         <Text style={tw`mr-2`}>{item.price}$</Text>
                         <Text>{item.quantity}</Text>
@@ -219,6 +217,13 @@ export default function DetailsScreen({ route, navigation }) {
                     setChecked(!checked);
                     setGratuityClicked(checked);
                     handleGratuity();
+                    data?.order.drinkOrder.map((item) => {
+                      console.log(item);
+                    });
+
+                    data?.order.order.map((item) => {
+                      console.log(item);
+                    });
                   }}
                 />
               </View>
@@ -229,9 +234,12 @@ export default function DetailsScreen({ route, navigation }) {
                 <Text style={tw``}>{grandTotal}$</Text>
               </View>
               <TouchableOpacity
-                style={tw`bg-red-400 px-4 py-2 rounded-lg mt-4`}
+                style={tw`bg-red-400 px-4 py-2 rounded-lg my-4`}
                 onPress={() => {
-                  navigation.navigate("PaymentScreen");
+                  navigation.navigate("PaymentScreen", {
+                    totalPrice: grandTotal,
+                    orderId: data?.order._id,
+                  });
                 }}
               >
                 <Text style={tw`font-semibold text-white`}>Checkout</Text>
@@ -249,6 +257,6 @@ export default function DetailsScreen({ route, navigation }) {
           )}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }

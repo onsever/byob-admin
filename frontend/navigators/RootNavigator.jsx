@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from "./TabNavigator";
+import AdminTabNavigator from "./AdminTabNavigator";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../redux/features/authSlice";
 import { getData } from "../utils/asyncStorage";
@@ -13,6 +14,7 @@ export default function RootNavigator() {
   React.useEffect(() => {
     async function fetchData() {
       const user = await getData("user");
+      console.log("user", user);
       if (user) dispatch(login(user));
     }
     fetchData();
@@ -20,7 +22,7 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {userLoggedIn ? <TabNavigator /> : <AuthStackNavigator />}
+      {userLoggedIn ? userLoggedIn.role === "ADMIN" ? <AdminTabNavigator /> : <TabNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 }

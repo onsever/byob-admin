@@ -192,9 +192,9 @@ const orderService = (() => {
         const highestOrdered = category.drinks[0].id;
         const drinkDetail = await Drink.findById(highestOrdered);
         if (!drinkDetail.toJSON().isHighest) {
-          await Drink.findOneAndUpdate(
-            { isHighest: true, _id: drinkDetail._id },
-            { isHighest: false }
+          await Drink.updateMany(
+            { isHighest: true },
+            { $set: { isHighest: false } }
           );
           drinkDetail.isHighest = true;
           drinkDetail.currentPrice = (

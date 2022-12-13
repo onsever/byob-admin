@@ -41,10 +41,14 @@ route.post("/user/register", (req, res) => {
       .idScan(req.body.downloadURL)
       .then((result) => {
         const isVerified = verifyBirthDate(result[0].description);
-
+        // const isVerified = { isAdult: true, birthDate: new Date() };
         if (isVerified.isAdult) {
           authService
-            .userRegister({ ...req.body.userObj, dob: isVerified.birthDate })
+            .userRegister({
+              ...req.body.userObj,
+              dob: isVerified.birthDate,
+              isGoogleSignIn: true,
+            })
             .then((result) => {
               httpHelper.success(res, { ...result, isAdult: true });
             })
