@@ -41,12 +41,14 @@ export default function HomeScreen({ navigation }) {
   console.log(noOfTables);
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: StatusBar.currentHeight, padding: 10 }}
+    >
       <View>
         <View style={tw`mt-5`}>
           <Text style={tw`text-center font-bold text-10`}>Select a Table</Text>
         </View>
-        <View style={tw`w-full items-center justify-center px-8`}>
+        <View style={tw`w-full items-center justify-center px-4 py-2 mb-4`}>
           <TableList
             arr={Array.from(Array(+noOfTables).keys())}
             onAction={(index) => handleTableClick(index)}

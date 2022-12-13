@@ -12,7 +12,7 @@ export default function TableList({ arr, onAction }) {
       data={arr}
       numColumns={2}
       ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
-      style={{ width: "100%" }}
+      style={{ width: "100%", marginBottom: "30%", paddingTop: 20 }}
       columnWrapperStyle={{ justifyContent: "space-between" }}
       renderItem={({ item, index }) => (
         <TableItem

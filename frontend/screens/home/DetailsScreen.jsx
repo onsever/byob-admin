@@ -44,7 +44,17 @@ export default function DetailsScreen({ route, navigation }) {
 
   const handleGratuity = () => {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
-    console.log(extraPrice);
+    const newGrandTotal = (totalPrice + extraPrice).toFixed(2);
+
+    console.log(gratuityClicked);
+
+    if (gratuityClicked) {
+      setGrandTotal(newGrandTotal);
+    }
+    console.log(totalPrice);
+    console.log(newGrandTotal);
+
+    console.log(grandTotal);
   };
 
   React.useEffect(() => {
