@@ -175,6 +175,20 @@ const menuService = (() => {
     });
   };
 
+  const resetDrinkPrices = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await Drink.updateMany(
+          {},
+          { $set: { isHighest: false, currentPrice: "" } }
+        );
+        resolve("All drinks reset to it's original state");
+      } catch (e) {
+        reject("Error in reset drink prices service");
+      }
+    });
+  };
+
   const saveDrink = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -241,6 +255,7 @@ const menuService = (() => {
     deleteDrink: deleteDrink,
     deleteFood: deleteFood,
     deleteCategory: deleteCategory,
+    resetDrinkPrices,
   };
 })();
 
