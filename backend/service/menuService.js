@@ -71,9 +71,29 @@ const menuService = (() => {
   const saveCategory = (params) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const newCat = Category(params);
-        await newCat.save();
-        resolve(newCat);
+        if (params._id) {
+          await Category.findByIdAndUpdate(params._id, { $set: params });
+          resolve("Category Updated Successfully");
+        } else {
+          const newCat = Category(params);
+          await newCat.save();
+          resolve("Category Added Successfully");
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
+  const deleteCategory = (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (id) {
+          await Category.findByIdAndDelete(id);
+          resolve("Category Deleted.");
+        } else {
+          reject("Category not found.");
+        }
       } catch (e) {
         reject(e);
       }
@@ -220,6 +240,7 @@ const menuService = (() => {
     getAllDrink: getAllDrink,
     deleteDrink: deleteDrink,
     deleteFood: deleteFood,
+    deleteCategory: deleteCategory,
   };
 })();
 
