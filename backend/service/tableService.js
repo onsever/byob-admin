@@ -1,6 +1,7 @@
 import Table from "../model/table.js";
 import Order from "../model/order.js";
 import User from "../model/user.js";
+import Constant from "../model/constant.js";
 import moment from "moment";
 
 const tableService = (() => {
@@ -98,6 +99,9 @@ const tableService = (() => {
     return new Promise(async (resolve, reject) => {
       try {
         const today = moment().startOf("day");
+        const tableNumber = await Constant.findOne({
+          key: "noOfTables",
+        }).exec();
         const table = await Table.find(
           {
             createdAt: {
@@ -108,8 +112,19 @@ const tableService = (() => {
           },
           { checkedOut: 1, tableNo: 1, _id: 0 }
         ).exec();
+        let tables = [];
+        for (let i = 0; i < +tableNumber.value; i++) {
+          const t = {
+            tableNo: i + 1,
+            isReserved: false,
+          };
+          if (table.some((x) => +x.tableNo === i + 1)) {
+            t.isReserved = true;
+          }
+          tables.push(t);
+        }
 
-        resolve(table);
+        resolve(tables);
       } catch (e) {
         reject("Error while getting table info.");
       }

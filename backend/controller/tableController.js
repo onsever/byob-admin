@@ -44,7 +44,7 @@ route.get("/all/:id", auth, (req, res) => {
   }
 });
 
-route.get("/all-reservation", auth, (req, res) => {
+route.get("/all-tables", auth, (req, res) => {
   try {
     tableService
       .getAllTableReservation()

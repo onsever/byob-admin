@@ -6,6 +6,7 @@ const OrderSchema = new mongoose.Schema(
     drinkOrder: { type: Array, required: true },
     isComplete: { type: Boolean, required: true },
     totalPaid: { type: String, required: false },
+    paymentMethod: { type: String, required: false },
   },
   {
     timestamps: true,

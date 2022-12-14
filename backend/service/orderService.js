@@ -223,6 +223,7 @@ const orderService = (() => {
         await Order.findByIdAndUpdate(orderId, {
           isComplete: true,
           totalPaid: params.totalPaid,
+          paymentMethod: params.paymentMethod,
         });
 
         await Table.findOneAndUpdate(
