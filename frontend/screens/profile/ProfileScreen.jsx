@@ -8,7 +8,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 
-
 export default function ProfileScreen() {
   const dispatch = useDispatch();
   const { fetch, loading, loaded, result } = useFetch();
@@ -79,10 +78,14 @@ export default function ProfileScreen() {
       </View>
 
       <TouchableOpacity
-        style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
+        style={tw`bg-[#640100] px-4 py-4 m-4 rounded-lg`}
         onPress={!loading && onResetDrinks}
       >
-        {loading ? <ActivityIndicator /> : <Text>Reset Drink Prices</Text>}
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={tw`text-white`}>Reset Drink Prices</Text>
+        )}
       </TouchableOpacity>
     </SafeAreaView>
   );
