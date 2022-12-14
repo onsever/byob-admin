@@ -43,14 +43,12 @@ export default function DetailsScreen({ route, navigation }) {
     return +toTwoDecimal(price) + +toTwoDecimal(gstCalculator(price));
   };
 
-   const handleGratuity = () => {
+  const handleGratuity = () => {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
 
-    if (gratuityClicked) {
-      setGrandTotal(grandTotal + extraPrice);
-    } else {
-      setGrandTotal(totalPrice + extraPrice);
-    }
+    setGrandTotal(
+      gratuityClicked ? grandTotal + extraPrice : totalPrice + extraPrice
+    );
   };
 
   React.useEffect(() => {

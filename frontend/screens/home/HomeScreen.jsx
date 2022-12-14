@@ -7,6 +7,7 @@ import { useFetch } from "../../hooks/useFetch";
 
 export default function HomeScreen({ navigation }) {
   const [noOfTables, setNoOfTables] = React.useState(null);
+  const [data, setData] = React.useState(null);
   const { loaded, loading, error, fetch, result } = useFetch();
 
   const handleTableClick = (index) => {
@@ -14,7 +15,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   React.useEffect(() => {
-    fetch("constant");
+    fetch("table/all-tables");
   }, [1]);
 
   React.useEffect(() => {
@@ -23,7 +24,8 @@ export default function HomeScreen({ navigation }) {
         console.log(error);
       }
       if (result) {
-        setNoOfTables(+result[0].value);
+        setNoOfTables(result?.length);
+        setData(result);
       }
     }
   }, [loaded]);
@@ -39,6 +41,7 @@ export default function HomeScreen({ navigation }) {
         <View style={tw`w-full items-center justify-center px-4 py-2 mb-4`}>
           <TableList
             arr={Array(noOfTables).fill("")}
+            tableList={data}
             onAction={(index) => handleTableClick(index)}
           />
         </View>
