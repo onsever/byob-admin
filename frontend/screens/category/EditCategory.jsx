@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -22,6 +22,12 @@ export default function EditCategoryScreen({ navigation, route }) {
       isDrink: true,
     }
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Edit Category",
+    });
+  }, [navigation]);
 
   useEffect(() => {
     if (postCategory.error) {

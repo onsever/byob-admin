@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   Text,
   ScrollView,
@@ -18,6 +18,12 @@ export default function FoodScreen({ navigation }) {
   useEffect(() => {
     getAllFood();
   }, [1]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Foods",
+    });
+  }, [navigation]);
 
   const getAllFood = () => {
     fetch("menu/food");
@@ -47,9 +53,10 @@ export default function FoodScreen({ navigation }) {
             <RefreshControl refreshing={loading} onRefresh={getAllFood} />
           }
         >
-          {foods?.map((x) => {
+          {foods?.map((x, i) => {
             return (
               <TouchableOpacity
+                key={i}
                 onPress={() => {
                   navigation.navigate("EditFoodScreen", {
                     food: x,

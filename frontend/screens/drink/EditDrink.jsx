@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -27,6 +27,12 @@ export default function EditDrinkScreen({ navigation, route }) {
       category: "",
     }
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: drink.title || "Add Drink",
+    });
+  }, [navigation]);
 
   useEffect(() => {
     fetchCategory.fetch("menu/category");
@@ -109,7 +115,7 @@ export default function EditDrinkScreen({ navigation, route }) {
               }
             >
               {fetchCategory.result.map((x, i) => {
-                return <Picker.Item label={x.name} value={x._id} />;
+                return <Picker.Item key={i} label={x.name} value={x._id} />;
               })}
             </Picker>
           )}

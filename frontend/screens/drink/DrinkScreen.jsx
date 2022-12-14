@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   Text,
   ScrollView,
@@ -18,6 +18,12 @@ export default function DrinkScreen({ navigation }) {
   useEffect(() => {
     getAllDrink();
   }, [1]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Drinks",
+    });
+  }, [navigation]);
 
   const getAllDrink = () => {
     fetch("menu/drink/all");
@@ -47,9 +53,10 @@ export default function DrinkScreen({ navigation }) {
             <RefreshControl refreshing={loading} onRefresh={getAllDrink} />
           }
         >
-          {drinks?.map((x) => {
+          {drinks?.map((x, i) => {
             return (
               <TouchableOpacity
+                key={i}
                 onPress={() => {
                   navigation.navigate("EditDrinkScreen", {
                     drink: x,
