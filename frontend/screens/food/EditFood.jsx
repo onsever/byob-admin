@@ -72,7 +72,7 @@ export default function EditFoodScreen({ navigation, route }) {
           <Text style={tw`mb-2 `}>Price</Text>
           <TextInput
             placeholder="Price"
-            keyboardType="number-pad"
+            keyboardType="numeric"
             value={food.price}
             onChangeText={(text) => setFood({ ...food, price: text })}
             style={tw`border px-4 py-3 rounded-lg border-[#C5C5C5] font-thin`}
@@ -88,7 +88,6 @@ export default function EditFoodScreen({ navigation, route }) {
             {postFood.loading ? (
               <ActivityIndicator />
             ) : (
-             
               <View>
                 {prevFood ? (
                   <FontAwesome

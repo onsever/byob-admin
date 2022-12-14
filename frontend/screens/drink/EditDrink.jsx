@@ -79,7 +79,7 @@ export default function EditDrinkScreen({ navigation, route }) {
           <Text style={tw`mb-2 `}>Price</Text>
           <TextInput
             placeholder="Price"
-            keyboardType="number-pad"
+            keyboardType="numeric"
             value={drink.price}
             onChangeText={(text) => setDrink({ ...drink, price: text })}
             style={tw`border px-4 py-3 rounded-lg border-[#C5C5C5] font-thin`}
@@ -89,7 +89,7 @@ export default function EditDrinkScreen({ navigation, route }) {
           <Text style={tw`mb-2 `}>Guaranteed Price</Text>
           <TextInput
             placeholder="Guaranteed Price"
-            keyboardType="number-pad"
+            keyboardType="numeric"
             value={drink.guranteedPrice}
             onChangeText={(text) =>
               setDrink({ ...drink, guranteedPrice: text })
