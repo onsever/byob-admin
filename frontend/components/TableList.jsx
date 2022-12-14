@@ -7,6 +7,8 @@ export default function TableList({ arr, onAction, tableList }) {
     onAction(index);
   };
 
+  console.log(tableList);
+
   return (
     <FlatList
       data={arr}

@@ -39,11 +39,13 @@ export default function HomeScreen({ navigation }) {
           <Text style={tw`text-center font-bold text-10`}>Select a Table</Text>
         </View>
         <View style={tw`w-full items-center justify-center px-4 py-2 mb-4`}>
-          <TableList
-            arr={Array(noOfTables).fill("")}
-            tableList={data}
-            onAction={(index) => handleTableClick(index)}
-          />
+          {data && (
+            <TableList
+              arr={Array(noOfTables).fill("")}
+              tableList={data}
+              onAction={(index) => handleTableClick(index)}
+            />
+          )}
         </View>
       </View>
     </SafeAreaView>
