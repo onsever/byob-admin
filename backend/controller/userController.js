@@ -34,6 +34,19 @@ route.get("/all", auth, (req, res) => {
   }
 });
 
+route.get("/check-validity/:email", (req, res) => {
+  try {
+    userService
+      .checkValidity(req.params.email)
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 route.get("/:id", (req, res) => {
   try {
     userService

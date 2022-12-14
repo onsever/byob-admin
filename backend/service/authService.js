@@ -99,7 +99,7 @@ const authService = (() => {
             const newUser = new User({
               firstName: credentials["given_name"],
               lastName: credentials["family_name"],
-              email: credentials["email"],
+              email: credentials["email"]?.toLowerCase(),
               password: credentials["id"],
               dob: credentials["dob"],
             });
@@ -123,10 +123,13 @@ const authService = (() => {
             credentials.email &&
             credentials.password
           ) {
-            const user = await User.findOne({ email: credentials.email });
+            const user = await User.findOne({
+              email: credentials.email.toLowerCase(),
+            });
             if (user) {
               reject("User already exists.");
             } else {
+              credentials.email = credentials.email.toLowerCase();
               const newUser = new User(credentials);
               const salt = await bcrypt.genSalt(10);
               newUser.password = await bcrypt.hash(newUser.password, salt);
