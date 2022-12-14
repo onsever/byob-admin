@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -29,6 +29,12 @@ export default function EditDrinkScreen({ navigation, route }) {
       category: "",
     }
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: drink.title || "Add Drink",
+    });
+  }, [navigation]);
 
   useEffect(() => {
     fetchCategory.fetch("menu/category");
@@ -97,24 +103,40 @@ export default function EditDrinkScreen({ navigation, route }) {
               onChangeText={(text) =>
                 setDrink({ ...drink, guranteedPrice: text })
               }
-              style={tw`border px-4 py-3 rounded-lg border-[#C5C5C5] font-thin`}
-            />
-          </View>
-          <View style={tw`flex flex-col mb-5 bg-white py-4 rounded-lg`}>
-            <Text style={tw`mb-2 font-thin text-4 text-center`}>
-              Select Category
-            </Text>
-            {fetchCategory.loaded && (
-              <Picker
-                selectedValue={drink.category}
-                onValueChange={(itemValue, itemIndex) =>
-                  setDrink({ ...drink, category: itemValue })
-                }
-              >
-                {fetchCategory.result.map((x, i) => {
-                  return <Picker.Item label={x.name} value={x._id} />;
-                })}
-              </Picker>
+            >
+              {fetchCategory.result.map((x, i) => {
+                return <Picker.Item key={i} label={x.name} value={x._id} />;
+              })}
+            </Picker>
+          )}
+        </View>
+        <View style={tw`flex flex-row justify-center items-center`}>
+          <TouchableOpacity
+            style={tw`mr-5`}
+            onPress={() => {
+              if (
+                drink.title &&
+                drink.price &&
+                drink.guranteedPrice &&
+                drink.category
+              )
+                postDrink.post("menu/drink", drink);
+            }}
+          >
+            {postDrink.loading ? (
+              <ActivityIndicator />
+            ) : (
+              <View>
+                {prevDrink ? (
+                  <FontAwesome
+                    name="pencil-square-o"
+                    size={34}
+                    color="#808080"
+                  />
+                ) : (
+                  <FontAwesome name="plus-circle" size={34} color="#640100" />
+                )}
+              </View>
             )}
           </View>
           <View style={tw`flex flex-row justify-center items-center`}>

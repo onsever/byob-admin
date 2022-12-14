@@ -57,7 +57,7 @@ export default function LoginScreen({ navigation }) {
           />
 
           <TouchableOpacity
-            style={tw`flex flex-row justify-center align-center`}
+            style={tw`flex flex-row justify-center items-center`}
             onPress={() => {
               console.log(("form", form));
               post("auth/login", form);
