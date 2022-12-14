@@ -55,10 +55,23 @@ const constantService = (() => {
     });
   };
 
+  const checkValidity = (email) => {
+    return new Promise(async (resolve, reject) => {
+      User.findOne({ email: email.toLowerCase() }).then((result) => {
+        if (result) {
+          resolve({ userExists: true });
+        } else {
+          resolve({ userExists: false });
+        }
+      });
+    });
+  };
+
   return {
     getUserById: getUserById,
     getUserTableDetail: getUserTableDetail,
     getAllUsers: getAllUsers,
+    checkValidity,
   };
 })();
 

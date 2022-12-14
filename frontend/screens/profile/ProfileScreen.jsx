@@ -5,9 +5,22 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
 import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useEffect } from "react";
+import { useFetch } from "../../hooks/useFetch";
+
 
 export default function ProfileScreen() {
   const dispatch = useDispatch();
+  const { fetch, loading, loaded, result } = useFetch();
+
+  const onResetDrinks = () => fetch("menu/drink/reset");
+
+  useEffect(() => {
+    if (result) {
+      Alert.alert("Success", result);
+    }
+  }, [loaded]);
+
   return (
     <SafeAreaView style={tw`flex-1 px-6 relative items-center`}>
       <View style={tw`items-center w-full`}>
@@ -64,6 +77,13 @@ export default function ProfileScreen() {
           )}
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
+        onPress={!loading && onResetDrinks}
+      >
+        {loading ? <ActivityIndicator /> : <Text>Reset Drink Prices</Text>}
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

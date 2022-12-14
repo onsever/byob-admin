@@ -174,4 +174,17 @@ route.post("/drink/list", auth, (req, res) => {
   }
 });
 
+route.get("/drink/reset", auth, (req, res) => {
+  try {
+    menuService
+      .resetDrinkPrices()
+      .then((result) => {
+        httpHelper.success(res, result);
+      })
+      .catch((err) => httpHelper.error(res, err));
+  } catch (e) {
+    httpHelper.error(res, e);
+  }
+});
+
 export default route;
