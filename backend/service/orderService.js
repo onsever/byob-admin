@@ -198,9 +198,13 @@ const orderService = (() => {
           );
           drinkDetail.isHighest = true;
           drinkDetail.currentPrice = (
-            +drinkDetail.guranteedPrice +
-            0.2 * +drinkDetail.guranteedPrice
+            +drinkDetail.price +
+            0.2 * +drinkDetail.price
           ).toFixed(2);
+          // drinkDetail.guranteedPrice = (
+          //   +drinkDetail.price +
+          //   0.5 * +drinkDetail.price
+          // ).toFixed(2);
           await drinkDetail.save();
         }
       });
