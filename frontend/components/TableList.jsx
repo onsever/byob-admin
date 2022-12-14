@@ -1,56 +1,25 @@
-import { View, FlatList, RefreshControl } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, FlatList } from "react-native";
+import React from "react";
 import TableItem from "./TableItem";
-import { useFetch } from "../hooks/useFetch";
 
-export default function TableList({ arr, onAction }) {
-  const { fetch, loading, loaded, result, error } = useFetch();
-  const [tables, setTable] = useState(
-    arr.map((x, i) => {
-      return { tableNo: i + 1 };
-    })
-  );
-
+export default function TableList({ arr, onAction, tableList }) {
   const handleTableSelection = (index) => {
     onAction(index);
   };
 
-  useEffect(() => {
-    fetch("table/all-reservation");
-  }, [1]);
-
-  useEffect(() => {
-    if (result) {
-      setTable(
-        tables.map((table) => {
-          table.isReserved = result.find((x) => +x.tableNo === +table.tableNo)
-            ? true
-            : false;
-          return table;
-        })
-      );
-    }
-  }, [loaded]);
-
   return (
     <FlatList
-      data={tables}
+      data={arr}
       numColumns={2}
       ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
       style={{ width: "100%", marginBottom: "30%", paddingTop: 20 }}
       columnWrapperStyle={{ justifyContent: "space-between" }}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          onRefresh={() => fetch("table/all-reservation")}
-        />
-      }
       renderItem={({ item, index }) => (
         <TableItem
-          item={item}
+          tableList={tableList}
           index={index}
           onAction={(index) => handleTableSelection(index)}
-          arr={tables}
+          arr={arr}
         />
       )}
     />
