@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Text,
   ScrollView,
@@ -18,12 +18,6 @@ export default function CategoryScreen({ navigation }) {
   useEffect(() => {
     getAllCategory();
   }, [1]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: "Categories",
-    });
-  }, [navigation]);
 
   const getAllCategory = () => {
     fetch("menu/category");
@@ -52,12 +46,9 @@ export default function CategoryScreen({ navigation }) {
             <RefreshControl refreshing={loading} onRefresh={getAllCategory} />
           }
         >
-          {categories?.map((x, i) => {
+          {categories?.map((x) => {
             return (
-              <View
-                key={i}
-                style={tw`shadow-md bg-[#F9F9F9] mx-2 my-1 items-center`}
-              >
+              <View style={tw`shadow-md bg-[#F9F9F9] mx-2 my-1 items-center`}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("EditCategoryScreen", {

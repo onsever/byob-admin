@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -24,12 +24,6 @@ export default function EditFoodScreen({ navigation, route }) {
       price: null,
     }
   );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: food.title || "Add Food",
-    });
-  }, [navigation]);
 
   useEffect(() => {
     if (postFood.error) {
