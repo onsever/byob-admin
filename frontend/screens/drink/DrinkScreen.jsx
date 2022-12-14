@@ -47,6 +47,13 @@ export default function DrinkScreen({ navigation }) {
           <Ionicons name="add-circle" size={52} color="#640100" />
         </TouchableOpacity>
       </View>
+      <View
+        style={tw`px-4 py-6 bg-[#640100] flex flex-row justify-between items-center px-10 `}
+      >
+        <Text style={tw`text-white text-4 w-40`}>Drinks Name</Text>
+        <Text style={tw`text-4 text-white w-10 `}>Price</Text>
+        <Text style={tw`text-4 text-white w-10`}>GP</Text>
+      </View>
       <View style={tw`flex-1 mx-10`}>
         <ScrollView
           refreshControl={
@@ -66,8 +73,9 @@ export default function DrinkScreen({ navigation }) {
                 style={tw`px-4 py-6 border-b border-[#D3D3D3]`}
               >
                 <View style={tw`flex flex-row justify-between items-center`}>
-                  <Text style={tw`text-5 font-thin`}>{x.title}</Text>
+                  <Text style={tw`text-5 font-thin w-40`}>{x.title}</Text>
                   <Text style={tw`font-thin`}>${x.price}</Text>
+                  <Text style={tw`font-thin`}>${x.guranteedPrice}</Text>
                 </View>
               </TouchableOpacity>
             );
