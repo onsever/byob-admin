@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 
+
 export default function ProfileScreen() {
   const dispatch = useDispatch();
   const { fetch, loading, loaded, result } = useFetch();
@@ -76,6 +77,7 @@ export default function ProfileScreen() {
           )}
         </TouchableOpacity>
       </View>
+
       <TouchableOpacity
         style={{ backgroundColor: "grey", padding: 10, margin: 10 }}
         onPress={!loading && onResetDrinks}
