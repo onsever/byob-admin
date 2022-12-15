@@ -201,6 +201,11 @@ const orderService = (() => {
             +drinkDetail.price +
             0.2 * +drinkDetail.price
           ).toFixed(2);
+          drinkDetail.displayGuaranteedPrice = (
+            drinkDetail.isHighest
+              ? +drinkDetail.currentPrice + +drinkDetail.currentPrice * 0.5
+              : +drinkDetail.price + +drinkDetail.price * 0.5
+          ).toFixed(2);
           // drinkDetail.guranteedPrice = (
           //   +drinkDetail.price +
           //   0.5 * +drinkDetail.price

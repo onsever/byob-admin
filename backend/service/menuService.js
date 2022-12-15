@@ -123,10 +123,16 @@ const menuService = (() => {
             data: drinks
               .filter((x) => x.category === cat.id)
               .map((drink) => {
+                drink = drink.toJSON();
                 if (!drink.isHighest || !drink.currentPrice) {
-                  drink.currentPrice = drink.guranteedPrice;
+                  drink.currentPrice = drink.price;
                 }
                 drink.isHighest = drink.isHighest || false;
+                drink.displayGuaranteedPrice = (
+                  drink.isHighest
+                    ? +drink.currentPrice + +drink.currentPrice * 0.5
+                    : +drink.price + +drink.price * 0.5
+                ).toFixed(2);
                 return drink;
               }),
           };
@@ -155,7 +161,16 @@ const menuService = (() => {
           }
         ).exec();
 
-        resolve(drinks);
+        resolve(
+          drinks.map((drink) => {
+            return {
+              ...drink,
+              displayGuaranteedPrice: drink.isHighest
+                ? +drink.currentPrice + +drink.currentPrice * 0.5
+                : +drink.price + +drink.price * 0.5,
+            };
+          })
+        );
       } catch (e) {
         reject(e);
       }
