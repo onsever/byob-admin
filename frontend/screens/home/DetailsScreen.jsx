@@ -47,7 +47,7 @@ export default function DetailsScreen({ route, navigation }) {
     const extraPrice = +toTwoDecimal(gstCalculator(totalPrice));
 
     setGrandTotal(
-      gratuityClicked ? grandTotal + extraPrice : totalPrice + extraPrice
+      !gratuityClicked ? grandTotal + extraPrice : totalPrice + extraPrice
     );
   };
 
@@ -213,15 +213,8 @@ export default function DetailsScreen({ route, navigation }) {
                 <CheckBox
                   onAction={(checked, setChecked) => {
                     setChecked(!checked);
-                    setGratuityClicked(checked);
+                    setGratuityClicked(!gratuityClicked);
                     handleGratuity();
-                    data?.order.drinkOrder.map((item) => {
-                      console.log(item);
-                    });
-
-                    data?.order.order.map((item) => {
-                      console.log(item);
-                    });
                   }}
                 />
               </View>
