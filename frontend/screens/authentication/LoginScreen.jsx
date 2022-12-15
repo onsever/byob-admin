@@ -36,12 +36,12 @@ export default function LoginScreen({ navigation }) {
       />
       <View style={tw`pr-10 pl-10 mt-5`}>
         <View style={tw`items-center mb-5`}>
-          <Text style={tw`text-10 mb-2 text-bold`}>Wine and Dine!</Text>
+          <Text style={tw`text-10 mb-2 font-bold`}>Wine and Dine!</Text>
           <Text>Life's A Party! Are you ready?</Text>
         </View>
 
         <View style={tw`flex flex-row justify-between mb-5`}></View>
-        <View style={tw`flex flex-column`}>
+        <View style={tw`flex flex-col`}>
           <Input
             inputStyles={"h-11 text-center mb-5"}
             placeholder={`Business Name`}
