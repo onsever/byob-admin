@@ -30,6 +30,12 @@ export default function HomeScreen({ navigation }) {
     }
   }, [loaded]);
 
+  React.useEffect(() => {
+    navigation.addListener("focus", () => {
+      fetch("table/all-tables");
+    });
+  }, [navigation]);
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: StatusBar.currentHeight, padding: 10 }}

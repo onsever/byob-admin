@@ -59,7 +59,7 @@ export default function PaymentScreen({ route, navigation }) {
         style={tw`w-full flex-row items-center justify-between px-4 py-2 my-4`}
       >
         <TouchableOpacity
-          style={tw`px-4 py-2 rounded-lg w-[48%] shadow-lg ${debitColor}}`}
+          style={tw`px-4 py-2 rounded-lg w-[48%] shadow-lg ${debitColor}`}
           onPress={() => setPaymentMethod("debitCard")}
         >
           <Image
@@ -71,7 +71,7 @@ export default function PaymentScreen({ route, navigation }) {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`px-4 py-2 rounded-lg w-[48%] shadow-lg ${cashColor}}`}
+          style={tw`px-4 py-2 rounded-lg w-[48%] shadow-lg ${cashColor}`}
           onPress={() => setPaymentMethod("cash")}
         >
           <Image
