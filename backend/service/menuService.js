@@ -164,7 +164,7 @@ const menuService = (() => {
         resolve(
           drinks.map((drink) => {
             return {
-              ...drink,
+              ...drink.toJSON(),
               displayGuaranteedPrice: drink.isHighest
                 ? +drink.currentPrice + +drink.currentPrice * 0.5
                 : +drink.price + +drink.price * 0.5,

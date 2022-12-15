@@ -1,8 +1,8 @@
 import { View, Text, ActivityIndicator, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../redux/features/authSlice";
 import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect } from "react";
@@ -10,6 +10,7 @@ import { useFetch } from "../../hooks/useFetch";
 
 export default function ProfileScreen() {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const { fetch, loading, loaded, result } = useFetch();
 
   const onResetDrinks = () => fetch("menu/drink/reset");
@@ -27,7 +28,7 @@ export default function ProfileScreen() {
           <Ionicons name="person-circle" size={120} color="#640100" />
         </TouchableOpacity>
       </View>
-      <View style={tw`mx-8 my-4 bg-white px-5  rounded-lg`}>
+      {/* <View style={tw`mx-8 my-4 bg-white px-5  rounded-lg`}>
         <View
           style={tw`flex-row justify-between border-b py-4 border-[#d0d0d0]`}
         >
@@ -52,7 +53,7 @@ export default function ProfileScreen() {
           <Text style={tw`font-bold text-lg`}>Phone: </Text>
           <Text style={tw`text-lg`}></Text>
         </View>
-      </View>
+      </View> */}
       <View style={tw`absolute bottom-2 right-2`}>
         <TouchableOpacity
           style={tw` bg-[#640100] rounded-full p-4`}
@@ -77,16 +78,18 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={tw`bg-[#640100] px-4 py-4 m-4 rounded-lg`}
-        onPress={!loading && onResetDrinks}
-      >
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={tw`text-white`}>Reset Drink Prices</Text>
-        )}
-      </TouchableOpacity>
+      {user?.role === "ADMIN" && (
+        <TouchableOpacity
+          style={tw`bg-[#640100] px-4 py-4 m-4 rounded-lg`}
+          onPress={!loading && onResetDrinks}
+        >
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={tw`text-white`}>Reset Drink Prices</Text>
+          )}
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }

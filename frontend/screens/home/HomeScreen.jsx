@@ -47,6 +47,8 @@ export default function HomeScreen({ navigation }) {
         <View style={tw`w-full items-center justify-center px-4 py-2 mb-4`}>
           {data && (
             <TableList
+              refreshing={loading}
+              onRefresh={() => fetch("table/all-tables")}
               arr={Array(noOfTables).fill("")}
               tableList={data}
               onAction={(index) => handleTableClick(index)}
