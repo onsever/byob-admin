@@ -42,6 +42,7 @@ export default function UserScreen({ navigation }) {
 
       if (result) {
         setData(result);
+        console.log(result);
       }
     }
   }, [loaded]);

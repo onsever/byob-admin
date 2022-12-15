@@ -18,10 +18,21 @@ export default function PaymentScreen({ route, navigation }) {
       return;
     }
 
-    post("order/complete/" + orderId, {
-      paymentMethod: paymentMethod,
-      totalPaid: totalPrice.toFixed(2),
-    });
+    Alert.alert("Are you sure?", "You cannot change your payment method.", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Confirm",
+        onPress: () => {
+          post("order/complete/" + orderId, {
+            paymentMethod: paymentMethod,
+            totalPaid: totalPrice.toFixed(2),
+          });
+        },
+      },
+    ]);
   };
 
   React.useLayoutEffect(() => {
