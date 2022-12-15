@@ -229,7 +229,7 @@ export default function DetailsScreen({ route, navigation }) {
                 style={tw`w-full flex-row items-center justify-between mt-2`}
               >
                 <Text style={tw`font-semibold`}>Grand Total</Text>
-                <Text style={tw``}>{grandTotal}$</Text>
+                <Text style={tw``}>{grandTotal.toFixed(2)}$</Text>
               </View>
               <TouchableOpacity
                 style={tw`bg-red-400 px-4 py-2 rounded-lg my-4`}
