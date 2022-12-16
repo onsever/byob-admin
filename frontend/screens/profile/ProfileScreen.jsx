@@ -28,7 +28,7 @@ export default function ProfileScreen() {
           <Ionicons name="person-circle" size={120} color="#640100" />
         </TouchableOpacity>
       </View>
-      {/* <View style={tw`mx-8 my-4 bg-white px-5  rounded-lg`}>
+      <View style={tw`mx-8 my-4 bg-white px-5  rounded-lg`}>
         <View
           style={tw`flex-row justify-between border-b py-4 border-[#d0d0d0]`}
         >
@@ -53,7 +53,7 @@ export default function ProfileScreen() {
           <Text style={tw`font-bold text-lg`}>Phone: </Text>
           <Text style={tw`text-lg`}></Text>
         </View>
-      </View> */}
+      </View>
       <View style={tw`absolute bottom-2 right-2`}>
         <TouchableOpacity
           style={tw` bg-[#640100] rounded-full p-4`}

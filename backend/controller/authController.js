@@ -42,6 +42,7 @@ route.post("/user/register", (req, res) => {
       .then((result) => {
         const isVerified = verifyBirthDate(result[0].description);
         // const isVerified = { isAdult: true, birthDate: new Date() };
+        console.log(req.body);
         if (isVerified.isAdult) {
           authService
             .userRegister({

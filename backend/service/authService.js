@@ -34,14 +34,12 @@ const client = new vision.ImageAnnotatorClient(CONFIG);
 const authService = (() => {
   const login = (username, password) => {
     return new Promise(async (resolve, reject) => {
-      console.log(username, password);
       await adminModel.find().then((result) => {
         console.log(result);
       });
       const user = await adminModel.findOne({
         username: username.toLowerCase(),
       });
-      console.log(user.toJSON());
       if (!user) {
         reject("User not Found.");
       } else {
@@ -87,7 +85,7 @@ const authService = (() => {
   const userRegister = (credentials) => {
     return new Promise(async (resolve, reject) => {
       try {
-        if (credentials.isGoogleSignIn) {
+        if (Object.hasOwnProperty.call(credentials, "family_name")) {
           const user = await User.findOne({ email: credentials.email });
           if (user) {
             userLogin(credentials.email, credentials.id, true).then(
